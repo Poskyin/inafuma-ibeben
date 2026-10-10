@@ -1,0 +1,69 @@
+{
+  "jugadores": [
+    {
+      "nombre": "Sebas",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Gabriel",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Cofer",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Saúl",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Fabio",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "David",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Lucas",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Diego",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Mako",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Bruno",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Dani",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Cano",
+      "camiseta": null,
+      "dorsal": null
+    },
+    {
+      "nombre": "Marcos",
+      "camiseta": null,
+      "dorsal": null
+    }
+  ]
+}

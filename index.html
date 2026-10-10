@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#D81F80">
+<meta name="description" content="Calendario, resultados, clasificación y plantilla de Inafuma Ibeben C.F. en la liga municipal de fútbol 7 de Madrid.">
+<meta property="og:title" content="Inafuma Ibeben C.F.">
+<meta property="og:description" content="Calendario, resultados y clasificación de la temporada 2026/27.">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/escudo-192.png">
+<title>Inafuma Ibeben C.F.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Outfit:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E8%91%89%E5%B7%BB%E8%BF%91%E6%89%80&display=swap">
+<style>
+/* Layout: pink-and-gold marble hero with the crest, a cream match card overlapping it, then a sticky four-way switch over lists, a table and the squad as shirt backs. */
+:root{
+  --bg:#FBF6F1; --surface:#FFFFFF; --fg:#22141C; --muted:#75626C; --line:#EADFD9;
+  --rosa:#D81F80; --rosa-ink:#B0145F; --rosa-soft:#FBE3EF;
+  --oro:#D6AE57; --oro-ink:#9A7424;
+  --azul:#173A82;
+  --win:#1F8A4C; --draw:#8A7C83; --loss:#C2352E;
+  --hero-ink:#FFF8F1;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-jp:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141113; --surface:#1D181B; --fg:#F4ECE8; --muted:#A8979F; --line:#30272C;
+  --rosa:#F03A97; --rosa-ink:#FF6DB1; --rosa-soft:#3A1828;
+  --oro:#E2BC68; --oro-ink:#E2BC68;
+  --azul:#5B82D6;
+  --win:#4CC27A; --draw:#A8979F; --loss:#F06C62;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#141113; --surface:#1D181B; --fg:#F4ECE8; --muted:#A8979F; --line:#30272C;
+  --rosa:#F03A97; --rosa-ink:#FF6DB1; --rosa-soft:#3A1828;
+  --oro:#E2BC68; --oro-ink:#E2BC68;
+  --azul:#5B82D6;
+  --win:#4CC27A; --draw:#A8979F; --loss:#F06C62;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--rosa);outline-offset:2px;border-radius:4px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* Hero */
+.hero{position:relative;background:#C8177A url("img/marmol-rosa.jpg") center/cover;color:var(--hero-ink);padding-inline:16px;padding-block:28px 72px;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,4,24,.10),rgba(40,4,24,.42));pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;display:flex;align-items:center;gap:18px}
+.crest{width:clamp(92px,24vw,132px);aspect-ratio:1;flex:none;filter:drop-shadow(0 6px 16px rgba(40,4,24,.45))}
+.id{min-width:0;display:flex;flex-direction:column;gap:2px}
+.kanji{font-family:var(--f-jp);font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--hero-ink);opacity:.9;margin:0}
+.hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(38px,11vw,68px);line-height:.88;margin:0;letter-spacing:.01em;text-wrap:balance;text-shadow:0 2px 0 rgba(40,4,24,.25)}
+.hero h1 span{color:#F2CF7C}
+.hero .meta{margin:6px 0 0;font-size:13.5px;font-weight:500;opacity:.95}
+
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:0 64px;display:flex;flex-direction:column;gap:18px}
+
+/* Next match */
+.next{margin-top:-52px;position:relative;z-index:2;background:var(--surface);border-radius:16px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(60,10,35,.12);padding:16px;display:flex;flex-direction:column;gap:14px}
+.next-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.label{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;background:var(--rosa);color:#fff;font-weight:600;font-size:13px;white-space:nowrap}
+.fixture{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.side{display:flex;flex-direction:column;gap:3px;min-width:0}
+.side.r{text-align:right;align-items:flex-end}
+.side .tag{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.side .nm{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(21px,6vw,30px);line-height:1;overflow-wrap:anywhere}
+.side.me .nm{color:var(--rosa)}
+.vs{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--oro-ink)}
+.next-meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;border-top:1px dashed var(--line);padding-top:12px}
+.next-meta b{font-weight:600}
+.next-meta a{color:var(--rosa-ink);font-weight:600}
+
+/* Summary */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.stat{padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:28px;line-height:1}
+.stat .k{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* Tabs */
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tabs button{appearance:none;border:1px solid var(--line);background:var(--surface);padding:10px 4px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--rosa);border-color:var(--rosa);color:#fff}
+
+h2{font-family:var(--f-display);font-weight:800;font-size:26px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.01em}
+.note{color:var(--muted);font-size:13.5px;margin:0}
+.panel{display:flex;flex-direction:column;gap:22px}
+
+/* Lists */
+.list{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:11px 12px}
+.row + .row{border-top:1px solid var(--line)}
+.row.is-next{background:var(--rosa-soft)}
+.jn{font-family:var(--f-display);font-weight:800;font-size:22px;color:var(--muted);text-align:center;line-height:1}
+.jn small{display:block;font-family:var(--f-body);font-size:10px;font-weight:600;letter-spacing:.1em}
+.mid{min-width:0;display:flex;flex-direction:column;gap:2px}
+.opp{font-weight:600;overflow-wrap:anywhere}
+.lv{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:1px 6px;border-radius:5px;margin-right:7px;vertical-align:1px}
+.lv.L{background:var(--rosa);color:#fff}
+.lv.V{border:1px solid var(--fg);color:var(--fg)}
+.when{font-size:13px;color:var(--muted)}
+.end{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.res{font-family:var(--f-display);font-weight:800;font-size:21px;white-space:nowrap}
+.pill{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;font-weight:700;font-size:12px;color:#fff}
+.pill.G{background:var(--win)} .pill.E{background:var(--draw)} .pill.P{background:var(--loss)}
+.soon{font-size:12px;font-weight:600;color:var(--rosa-ink);white-space:nowrap}
+
+/* Jornadas */
+.jor{display:flex;flex-direction:column;gap:6px}
+.jhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.jhead h3{font-family:var(--f-display);font-weight:800;font-size:21px;margin:0;text-transform:uppercase}
+.jhead .d{color:var(--muted);font-size:14px}
+.crow{display:grid;grid-template-columns:42px 1fr;gap:10px;align-items:center;padding:9px 12px}
+.crow + .crow{border-top:1px solid var(--line)}
+.crow.me{background:var(--rosa-soft)}
+.ct{font-weight:600;font-size:14px}
+.teams{min-width:0;display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
+.teams .h{text-align:right;overflow-wrap:anywhere;font-size:14px}
+.teams .a{overflow-wrap:anywhere;font-size:14px}
+.teams .s{font-family:var(--f-display);font-weight:800;font-size:19px;min-width:46px;text-align:center;white-space:nowrap}
+.teams .s.e{color:var(--muted);font-weight:600;font-size:14px}
+.teams .meT{font-weight:700;color:var(--rosa-ink)}
+.teams .pl{grid-column:1 / -1;text-align:center;font-size:12px;color:var(--muted);margin-top:-3px}
+
+/* Table */
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:540px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 8px;text-align:center;font-size:14px;white-space:nowrap}
+th{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--oro)}
+td.team,th.team{text-align:left;white-space:normal;min-width:150px}
+td.pos{font-family:var(--f-display);font-weight:800;font-size:19px;color:var(--muted);width:34px}
+td.pts{font-family:var(--f-display);font-weight:800;font-size:19px}
+tbody tr + tr td{border-top:1px solid var(--line)}
+tr.me td{background:var(--rosa-soft)}
+tr.me td.team{font-weight:700;color:var(--rosa-ink)}
+.form{display:inline-flex;gap:3px}
+.form .pill{width:18px;height:18px;font-size:10px;border-radius:4px}
+
+/* Squad: shirt backs */
+.squad{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px}
+.shirt{position:relative;aspect-ratio:1/1.02;background:#C8177A url("img/marmol-rosa.jpg") center/420px;clip-path:polygon(30% 0,38% 5%,62% 5%,70% 0,100% 15%,91% 36%,80% 31%,80% 100%,20% 100%,20% 31%,9% 36%,0 15%);display:flex;flex-direction:column;align-items:center;padding-top:18%;color:#F2CF7C}
+.shirt .sn{font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;text-shadow:0 1px 2px rgba(60,0,30,.5);max-width:58%;text-align:center;line-height:1.05;overflow-wrap:anywhere}
+.shirt .num{font-family:var(--f-display);font-weight:900;font-size:clamp(34px,10vw,46px);line-height:1;margin-top:4px;text-shadow:0 2px 3px rgba(60,0,30,.45)}
+.shirt .num.pend{font-size:12px;font-family:var(--f-body);font-weight:600;color:#FFE6F2;opacity:.85;margin-top:12px}
+.player{display:flex;flex-direction:column;gap:6px;align-items:center}
+.player .who{font-weight:600;font-size:14px}
+
+/* Kits */
+.kits{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kit{background:#151515;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;color:#F4ECE8}
+.kit img{width:100%;aspect-ratio:465/760;object-fit:cover;background:#151515}
+.kit .cap{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-top:3px solid var(--oro)}
+.kit .cap b{font-family:var(--f-display);font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.02em}
+.kit .cap span{font-size:12px;color:#BFAFB6}
+.flip{appearance:none;border:1px solid #4A3F44;background:transparent;color:#F4ECE8;border-radius:8px;padding:5px 9px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.old{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted)}
+.sw{display:inline-flex;border-radius:5px;overflow:hidden;border:1px solid var(--line);flex:none}
+.sw i{display:block;width:16px;height:16px}
+
+.venues{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.venue{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.venue b{font-family:var(--f-display);font-weight:800;font-size:19px;text-transform:uppercase}
+.venue span{font-size:13px;color:var(--muted)}
+.venue a{font-size:13px;font-weight:600;color:var(--rosa-ink)}
+
+.foot{border-top:2px solid var(--oro);padding-top:12px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px}
+.err{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;color:var(--muted)}
+
+@media (max-width:520px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:none}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .venues{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="crest" src="img/escudo.png" alt="Escudo de Inafuma Ibeben C.F." width="132" height="132">
+    <div class="id">
+      <p class="kanji" lang="ja">葉巻近所</p>
+      <h1>Inafuma Ibeben <span>C.F.</span></h1>
+      <p class="meta">Fútbol 7 · Juegos Deportivos Municipales 2026/27 · Latina · Domingo mañana · Grupo 3</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="next" class="next" aria-label="Próximo partido">
+    <div class="next-top"><span class="label">Próximo partido</span></div>
+    <p class="note">Cargando el calendario…</p>
+  </section>
+
+  <div id="stats" class="stats tnum" aria-label="Resumen de la temporada"></div>
+
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button id="tab-partidos" role="tab" aria-selected="true" aria-controls="p-partidos" data-tab="partidos">Partidos</button>
+    <button id="tab-clasificacion" role="tab" aria-selected="false" aria-controls="p-clasificacion" data-tab="clasificacion">Tabla</button>
+    <button id="tab-jornadas" role="tab" aria-selected="false" aria-controls="p-jornadas" data-tab="jornadas">Jornadas</button>
+    <button id="tab-plantilla" role="tab" aria-selected="false" aria-controls="p-plantilla" data-tab="plantilla">Plantilla</button>
+  </nav>
+
+  <div id="p-partidos" class="panel" role="tabpanel" aria-labelledby="tab-partidos"></div>
+  <div id="p-clasificacion" class="panel" role="tabpanel" aria-labelledby="tab-clasificacion" hidden></div>
+  <div id="p-jornadas" class="panel" role="tabpanel" aria-labelledby="tab-jornadas" hidden></div>
+  <div id="p-plantilla" class="panel" role="tabpanel" aria-labelledby="tab-plantilla" hidden></div>
+
+  <footer class="foot">
+    <span id="updated">Resultados actualizados: –</span>
+    <span>Calendario oficial en la <a href="https://deportesweb.madrid.es/DeportesWeb/Home" target="_blank" rel="noopener">web de deportes del Ayuntamiento de Madrid</a> (Competiciones municipales → Consulta de partidos). Los cambios de hora o campo salen allí antes.</span>
+    <span>Clasificación calculada con los resultados de esta página: 3 puntos por victoria y 1 por empate; a igualdad de puntos, diferencia de goles y después goles a favor.</span>
+  </footer>
+</main>
+
+<script>
+const TEAM = "Inafuma Ibeben";
+const TABS = ["partidos","clasificacion","jornadas","plantilla"];
+const VENUES = {
+  "Las Cruces": {q:"Centro Deportivo Municipal Las Cruces Madrid", sub:"CDM Las Cruces"},
+  "Aluche": {q:"Centro Deportivo Municipal Aluche, Avenida de las Águilas 14, Madrid", sub:"Av. de las Águilas, 14"},
+  "Gallur": {q:"Centro Deportivo Municipal Gallur Madrid", sub:"CDM Gallur"}
+};
+const DAYS = ["dom","lun","mar","mié","jue","vie","sáb"];
+const MONTHS = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const fmtDay = d => DAYS[d.getDay()] + " " + d.getDate() + " " + MONTHS[d.getMonth()];
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const dayStart = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const mapUrl = site => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((VENUES[site] || {q:site + " Madrid"}).q);
+
+let MATCHES = [], MINE = [], TEAMS = [], RES = {}, SQUAD = [], UPDATED = null;
+let tab = "partidos";
+const flipped = {rosa:false, portero:false};
+
+function scoreOf(m){ const r = RES[m.id]; return Array.isArray(r) && r.length === 2 ? {h:r[0], a:r[1]} : null; }
+function outcomeFor(team, m, r){
+  const a = m.local === team ? r.h : r.a, b = m.local === team ? r.a : r.h;
+  return a > b ? "G" : a < b ? "P" : "E";
+}
+function standings(){
+  const t = {};
+  TEAMS.forEach(n => t[n] = {team:n, pj:0, g:0, e:0, p:0, gf:0, gc:0, pts:0, form:[]});
+  MATCHES.forEach(m => {
+    const r = scoreOf(m); if (!r) return;
+    const H = t[m.local], A = t[m.visitante];
+    H.pj++; A.pj++; H.gf += r.h; H.gc += r.a; A.gf += r.a; A.gc += r.h;
+    if (r.h > r.a){ H.g++; A.p++; H.pts += 3; } else if (r.h < r.a){ A.g++; H.p++; A.pts += 3; } else { H.e++; A.e++; H.pts++; A.pts++; }
+    H.form.push(outcomeFor(m.local, m, r)); A.form.push(outcomeFor(m.visitante, m, r));
+  });
+  return Object.values(t).sort((x,y) => y.pts - x.pts || (y.gf-y.gc) - (x.gf-x.gc) || y.gf - x.gf || x.team.localeCompare(y.team,"es"));
+}
+function nextMine(){ const today = dayStart(new Date()); return MINE.find(m => !scoreOf(m) && dayStart(m.dt) >= today) || null; }
+function countdown(m){
+  const days = Math.round((dayStart(m.dt) - dayStart(new Date())) / 864e5);
+  return days === 0 ? "Hoy" : days === 1 ? "Mañana" : "Faltan " + days + " días";
+}
+
+function renderNext(){
+  const el = document.getElementById("next");
+  const m = nextMine();
+  if (!m){ el.innerHTML = `<div class="next-top"><span class="label">Temporada</span></div><p class="note">No quedan partidos por jugar.</p>`; return; }
+  const homeMe = m.local === TEAM;
+  el.innerHTML = `
+    <div class="next-top"><span class="label">Próximo partido · Jornada ${m.jornada}</span><span class="chip">${countdown(m)}</span></div>
+    <div class="fixture">
+      <div class="side ${homeMe ? "me" : ""}"><span class="tag">Local</span><span class="nm">${esc(m.local)}</span></div>
+      <span class="vs">VS</span>
+      <div class="side r ${homeMe ? "" : "me"}"><span class="tag">Visitante</span><span class="nm">${esc(m.visitante)}</span></div>
+    </div>
+    <div class="next-meta tnum">
+      <span><b>${cap(fmtDay(m.dt))}</b></span><span><b>${m.hora}</b></span>
+      <span>${esc(m.sede)} · campo ${esc(m.campo)}</span>
+      <a href="${mapUrl(m.sede)}" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>`;
+}
+
+function renderStats(){
+  const st = standings(); const i = st.findIndex(s => s.team === TEAM); const me = st[i];
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><span class="v">${me.pj ? (i + 1) + "º" : "–"}</span><span class="k">Posición</span></div>
+    <div class="stat"><span class="v">${me.pts}</span><span class="k">Puntos</span></div>
+    <div class="stat"><span class="v">${me.g}-${me.e}-${me.p}</span><span class="k">G-E-P</span></div>
+    <div class="stat"><span class="v">${me.gf}:${me.gc}</span><span class="k">Goles</span></div>`;
+}
+
+function renderPartidos(){
+  const nxt = nextMine();
+  const counts = {}; const fields = {};
+  MINE.forEach(m => { counts[m.sede] = (counts[m.sede] || 0) + 1; (fields[m.sede] = fields[m.sede] || new Set()).add(m.campo); });
+  const rows = MINE.map(m => {
+    const r = scoreOf(m), homeMe = m.local === TEAM, opp = homeMe ? m.visitante : m.local;
+    const o = r ? outcomeFor(TEAM, m, r) : null, isNext = nxt && nxt.id === m.id;
+    const end = r ? `<span class="res tnum">${r.h}–${r.a}</span><span class="pill ${o}" title="${o === "G" ? "Victoria" : o === "E" ? "Empate" : "Derrota"}">${o}</span>`
+                  : (isNext ? `<span class="soon">Próximo</span>` : "");
+    return `<div class="row ${isNext ? "is-next" : ""}">
+      <div class="jn tnum"><small>J</small>${m.jornada}</div>
+      <div class="mid">
+        <span class="opp"><span class="lv ${homeMe ? "L" : "V"}" title="${homeMe ? "Local" : "Visitante"}">${homeMe ? "LOCAL" : "VISIT."}</span>${esc(opp)}</span>
+        <span class="when tnum">${cap(fmtDay(m.dt))} · ${m.hora} · ${esc(m.sede)}, campo ${esc(m.campo)}</span>
+      </div>
+      <div class="end">${end}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("p-partidos").innerHTML = `
+    <section><h2>Nuestros 22 partidos</h2><div class="list">${rows}</div></section>
+    <section><h2>Campos</h2><div class="venues">${Object.keys(VENUES).map(s => `
+      <div class="venue"><b>${esc(s)}</b>
+        <span>${counts[s] || 0} partidos · ${fields[s] ? "campos " + [...fields[s]].sort().join(" y ") : ""}</span>
+        <span>${esc(VENUES[s].sub)}</span>
+        <a href="${mapUrl(s)}" target="_blank" rel="noopener">Ver en el mapa</a></div>`).join("")}</div></section>`;
+}
+
+function renderTabla(){
+  const st = standings(); const any = st.some(s => s.pj > 0);
+  const body = st.map((s,i) => `<tr class="${s.team === TEAM ? "me" : ""}">
+    <td class="pos">${any ? i + 1 : "–"}</td><td class="team">${esc(s.team)}</td>
+    <td>${s.pj}</td><td>${s.g}</td><td>${s.e}</td><td>${s.p}</td><td>${s.gf}</td><td>${s.gc}</td>
+    <td>${s.gf - s.gc > 0 ? "+" : ""}${s.gf - s.gc}</td><td class="pts">${s.pts}</td>
+    <td><span class="form">${s.form.slice(-5).map(o => `<span class="pill ${o}">${o}</span>`).join("")}</span></td></tr>`).join("");
+  document.getElementById("p-clasificacion").innerHTML = `<section>
+    <h2>Clasificación</h2>
+    ${any ? "" : `<p class="note" style="margin-bottom:10px">La liga empieza el ${fmtDay(MATCHES[0].dt)}. Hasta el primer resultado, los equipos van por orden alfabético.</p>`}
+    <div class="tablebox"><table>
+      <thead><tr><th>#</th><th class="team">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>Pts</th><th>Últimos</th></tr></thead>
+      <tbody>${body}</tbody></table></div></section>`;
+}
+
+function renderJornadas(){
+  const today = dayStart(new Date());
+  const firstOpen = MATCHES.find(m => dayStart(m.dt) >= today);
+  const js = [...new Set(MATCHES.map(m => m.jornada))];
+  document.getElementById("p-jornadas").innerHTML = js.map(j => {
+    const ms = MATCHES.filter(m => m.jornada === j).sort((a,b) => a.dt - b.dt || a.campo.localeCompare(b.campo) || a.sede.localeCompare(b.sede));
+    const rows = ms.map(m => {
+      const r = scoreOf(m), me = m.local === TEAM || m.visitante === TEAM;
+      return `<div class="crow ${me ? "me" : ""}"><span class="ct tnum">${m.hora}</span>
+        <div class="teams">
+          <span class="h ${m.local === TEAM ? "meT" : ""}">${esc(m.local)}</span>
+          <span class="s tnum ${r ? "" : "e"}">${r ? r.h + "–" + r.a : "–"}</span>
+          <span class="a ${m.visitante === TEAM ? "meT" : ""}">${esc(m.visitante)}</span>
+          <span class="pl">${esc(m.sede)}, campo ${esc(m.campo)}</span>
+        </div></div>`;
+    }).join("");
+    return `<section class="jor" id="j${j}"><div class="jhead"><h3>Jornada ${j}</h3><span class="d tnum">${cap(fmtDay(ms[0].dt))}</span>${firstOpen && firstOpen.jornada === j ? `<span class="soon">Próxima</span>` : ""}</div><div class="list">${rows}</div></section>`;
+  }).join("");
+}
+
+function renderPlantilla(){
+  const shirts = SQUAD.map(p => {
+    const label = p.camiseta || p.nombre;
+    const num = (p.dorsal !== null && p.dorsal !== undefined && p.dorsal !== "") ? `<span class="num tnum">${esc(p.dorsal)}</span>` : `<span class="num pend">dorsal por poner</span>`;
+    return `<div class="player"><div class="shirt" role="img" aria-label="Camiseta de ${esc(p.nombre)}"><span class="sn">${esc(label)}</span>${num}</div><span class="who">${esc(p.nombre)}</span></div>`;
+  }).join("");
+  const kit = (key, title, sub, front, back) => `<figure class="kit" style="margin:0">
+      <img src="${flipped[key] ? back : front}" alt="${title}, ${flipped[key] ? "espalda" : "frente"}" width="465" height="760" loading="lazy">
+      <figcaption class="cap"><div><b>${title}</b><br><span>${sub}</span></div><button class="flip" data-flip="${key}">${flipped[key] ? "Ver frente" : "Ver espalda"}</button></figcaption>
+    </figure>`;
+  document.getElementById("p-plantilla").innerHTML = `
+    <section><h2>Plantilla 2026/27</h2><p class="note" style="margin-bottom:12px">${SQUAD.length} inscritos. Los nombres de la camiseta y los dorsales están por confirmar.</p>
+      <div class="squad">${shirts}</div></section>
+    <section><h2>Equipaciones</h2>
+      <div class="kits">
+        ${kit("rosa","Rosa","Jugadores","img/kit-rosa.jpg","img/kit-rosa-espalda.jpg")}
+        ${kit("portero","Azul","Portero","img/kit-portero.jpg","img/kit-portero-espalda.jpg")}
+      </div>
+      <p class="old" style="margin-top:12px"><span class="sw" aria-hidden="true"><i style="background:#F5D20A"></i><i style="background:#1E50B4"></i></span>Hasta 2024/25 jugábamos de amarillo con pantalón azul.</p>
+    </section>`;
+}
+
+function render(){
+  renderNext(); renderStats(); renderPartidos(); renderTabla(); renderJornadas(); renderPlantilla();
+  TABS.forEach(t => {
+    document.getElementById("p-" + t).hidden = t !== tab;
+    document.getElementById("tab-" + t).setAttribute("aria-selected", String(t === tab));
+  });
+  if (UPDATED){ const d = new Date(UPDATED + "T12:00:00"); document.getElementById("updated").textContent = "Resultados actualizados el " + fmtDay(d) + " " + d.getFullYear() + "."; }
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-tab]");
+  if (b){ tab = b.dataset.tab; try { localStorage.setItem("ii-tab", tab); } catch(_){} render(); return; }
+  const f = e.target.closest("[data-flip]");
+  if (f){ flipped[f.dataset.flip] = !flipped[f.dataset.flip]; renderPlantilla(); }
+});
+
+(function initTab(){
+  const h = (location.hash || "").slice(1);
+  let t = TABS.includes(h) ? h : null;
+  if (!t){ try { t = localStorage.getItem("ii-tab"); } catch(_){} }
+  if (TABS.includes(t)) tab = t;
+})();
+
+async function getJSON(path){
+  const r = await fetch(path, {cache:"no-cache"});
+  if (!r.ok) throw new Error(path + " " + r.status);
+  return r.json();
+}
+(async function load(){
+  try {
+    const [partidos, resultados, plantilla] = await Promise.all([getJSON("data/partidos.json"), getJSON("data/resultados.json"), getJSON("data/plantilla.json")]);
+    MATCHES = partidos.map(m => ({...m, campo:String(m.campo), dt:new Date(m.fecha + "T" + m.hora + ":00")}));
+    MINE = MATCHES.filter(m => m.local === TEAM || m.visitante === TEAM).sort((a,b) => a.jornada - b.jornada);
+    TEAMS = [...new Set(MATCHES.flatMap(m => [m.local, m.visitante]))].sort((a,b) => a.localeCompare(b,"es"));
+    RES = (resultados && resultados.resultados) || {};
+    UPDATED = resultados && resultados.actualizado;
+    SQUAD = (plantilla && plantilla.jugadores) || [];
+    render();
+  } catch(err){
+    document.getElementById("next").innerHTML = `<div class="err">No se ha podido cargar el calendario. Recarga la página en unos segundos.</div>`;
+  }
+})();
+</script>
+
+</body>
+</html>
