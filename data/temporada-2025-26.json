@@ -1,0 +1,142 @@
+{
+  "temporada": "2025/26",
+  "edicion": "46 Juegos Deportivos Municipales",
+  "grupo": "Fútbol 7 sénior masculino · Latina",
+  "fuente": "jdmmadrid.es (web no oficial con datos abiertos del Ayuntamiento de Madrid)",
+  "fuenteUrl": "https://www.jdmmadrid.es/teams/?team_id=1452",
+  "nosotros": "Inafuma Ibeben C.F",
+  "clasificacion": [
+    {
+      "pos": 1,
+      "equipo": "PLATA O PLOMO FC",
+      "pj": 22,
+      "g": 21,
+      "e": 1,
+      "p": 0,
+      "gf": 177,
+      "gc": 51,
+      "pts": 64
+    },
+    {
+      "pos": 2,
+      "equipo": "Browers FC",
+      "pj": 22,
+      "g": 16,
+      "e": 3,
+      "p": 2,
+      "gf": 88,
+      "gc": 52,
+      "pts": 51
+    },
+    {
+      "pos": 3,
+      "equipo": "EKIPEJO",
+      "pj": 22,
+      "g": 14,
+      "e": 1,
+      "p": 7,
+      "gf": 100,
+      "gc": 63,
+      "pts": 43
+    },
+    {
+      "pos": 4,
+      "equipo": "U.D. BLUNT",
+      "pj": 22,
+      "g": 13,
+      "e": 2,
+      "p": 6,
+      "gf": 94,
+      "gc": 62,
+      "pts": 40
+    },
+    {
+      "pos": 5,
+      "equipo": "CLUB PENWIN",
+      "pj": 22,
+      "g": 10,
+      "e": 1,
+      "p": 10,
+      "gf": 72,
+      "gc": 72,
+      "pts": 31
+    },
+    {
+      "pos": 6,
+      "equipo": "O' Cuñeiros FC",
+      "pj": 22,
+      "g": 8,
+      "e": 6,
+      "p": 8,
+      "gf": 60,
+      "gc": 58,
+      "pts": 30
+    },
+    {
+      "pos": 7,
+      "equipo": "Infieles FC",
+      "pj": 22,
+      "g": 8,
+      "e": 2,
+      "p": 11,
+      "gf": 87,
+      "gc": 84,
+      "pts": 25
+    },
+    {
+      "pos": 8,
+      "equipo": "Inafuma Ibeben C.F",
+      "pj": 22,
+      "g": 7,
+      "e": 1,
+      "p": 13,
+      "gf": 55,
+      "gc": 89,
+      "pts": 22
+    },
+    {
+      "pos": 9,
+      "equipo": "CANALLITAS",
+      "pj": 22,
+      "g": 5,
+      "e": 4,
+      "p": 13,
+      "gf": 49,
+      "gc": 81,
+      "pts": 19
+    },
+    {
+      "pos": 10,
+      "equipo": "Madbulls",
+      "pj": 22,
+      "g": 5,
+      "e": 3,
+      "p": 14,
+      "gf": 39,
+      "gc": 83,
+      "pts": 18
+    },
+    {
+      "pos": 11,
+      "equipo": "RAYO MESITAS F.C",
+      "pj": 22,
+      "g": 5,
+      "e": 2,
+      "p": 15,
+      "gf": 44,
+      "gc": 104,
+      "pts": 17
+    },
+    {
+      "pos": 12,
+      "equipo": "Gurutiktoks F.C.",
+      "pj": 22,
+      "g": 5,
+      "e": 2,
+      "p": 14,
+      "gf": 54,
+      "gc": 126,
+      "pts": 17
+    }
+  ]
+}

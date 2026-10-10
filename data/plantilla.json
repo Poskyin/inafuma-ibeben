@@ -1,69 +1,88 @@
 {
   "jugadores": [
     {
-      "nombre": "Sebas",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 1,
+      "nombre": "Eduard Sebastián",
+      "camiseta": "Sevans",
+      "portero": true
     },
     {
-      "nombre": "Gabriel",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 2,
+      "nombre": "Gabriel Tarcaya",
+      "camiseta": "Tarcaya",
+      "portero": false
     },
     {
-      "nombre": "Cofer",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 3,
+      "nombre": "Adrián Cota",
+      "camiseta": "Cofer",
+      "portero": false
     },
     {
-      "nombre": "Saúl",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 4,
+      "nombre": "Saúl de Pablo",
+      "camiseta": "de Pablo",
+      "portero": false
     },
     {
-      "nombre": "Fabio",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 5,
+      "nombre": "Fabio Quesada",
+      "camiseta": "Fabiote",
+      "portero": false
     },
     {
-      "nombre": "David",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 6,
+      "nombre": "David de Pablo",
+      "camiseta": "Romero",
+      "portero": false
     },
     {
-      "nombre": "Lucas",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 7,
+      "nombre": "Lucas Merino",
+      "camiseta": "Merino",
+      "portero": false
     },
     {
-      "nombre": "Diego",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 8,
+      "nombre": "Diego Gómez",
+      "camiseta": "Gallu",
+      "portero": false
     },
     {
-      "nombre": "Mako",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 9,
+      "nombre": "Pablo Córdoba",
+      "camiseta": "Mako",
+      "portero": false
     },
     {
-      "nombre": "Bruno",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 10,
+      "nombre": "Bruno Sanz",
+      "camiseta": "Santos",
+      "portero": false
     },
     {
-      "nombre": "Dani",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 11,
+      "nombre": "Daniel de Pablo",
+      "camiseta": "Dani JR",
+      "portero": false
     },
     {
-      "nombre": "Cano",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 13,
+      "nombre": "Iván Cadenas",
+      "camiseta": "Cadenas",
+      "portero": false
     },
     {
-      "nombre": "Marcos",
-      "camiseta": null,
-      "dorsal": null
+      "dorsal": 14,
+      "nombre": "Marcos Lafuente",
+      "camiseta": "Rubio",
+      "portero": false
+    },
+    {
+      "dorsal": 15,
+      "nombre": "Adrián Curieses",
+      "camiseta": "Curinho",
+      "portero": false
     }
   ]
 }

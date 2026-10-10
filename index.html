@@ -23,6 +23,7 @@
   --azul:#173A82;
   --win:#1F8A4C; --draw:#8A7C83; --loss:#C2352E;
   --hero-ink:#FFF8F1;
+  --kitline:rgba(34,20,28,.3);
   --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --f-body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-jp:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
@@ -33,6 +34,7 @@
   --oro:#E2BC68; --oro-ink:#E2BC68;
   --azul:#5B82D6;
   --win:#4CC27A; --draw:#A8979F; --loss:#F06C62;
+  --kitline:rgba(244,236,232,.4);
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -41,6 +43,7 @@
   --oro:#E2BC68; --oro-ink:#E2BC68;
   --azul:#5B82D6;
   --win:#4CC27A; --draw:#A8979F; --loss:#F06C62;
+  --kitline:rgba(244,236,232,.4);
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -150,7 +153,9 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 /* Squad: shirt backs */
 .squad{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px}
 .shirt{position:relative;aspect-ratio:1/1.02;background:#C8177A url("img/marmol-rosa.jpg") center/420px;clip-path:polygon(30% 0,38% 5%,62% 5%,70% 0,100% 15%,91% 36%,80% 31%,80% 100%,20% 100%,20% 31%,9% 36%,0 15%);display:flex;flex-direction:column;align-items:center;padding-top:18%;color:#F2CF7C}
-.shirt .sn{font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;text-shadow:0 1px 2px rgba(60,0,30,.5);max-width:58%;text-align:center;line-height:1.05;overflow-wrap:anywhere}
+.shirt .sn{font-family:var(--f-display);font-weight:800;font-size:15px;letter-spacing:.03em;text-transform:uppercase;text-shadow:0 1px 2px rgba(60,0,30,.5);max-width:64%;text-align:center;line-height:1.05;overflow-wrap:normal;word-break:keep-all}
+.shirt .sn.m{font-size:13px}
+.shirt .sn.s{font-size:11px;letter-spacing:.01em}
 .shirt .num{font-family:var(--f-display);font-weight:900;font-size:clamp(34px,10vw,46px);line-height:1;margin-top:4px;text-shadow:0 2px 3px rgba(60,0,30,.45)}
 .shirt .num.pend{font-size:12px;font-family:var(--f-body);font-weight:600;color:#FFE6F2;opacity:.85;margin-top:12px}
 .player{display:flex;flex-direction:column;gap:6px;align-items:center}
@@ -177,7 +182,30 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 .foot{border-top:2px solid var(--oro);padding-top:12px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px}
 .err{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;color:var(--muted)}
 
+/* Rival kits */
+.kitsw{display:inline-flex;flex-direction:column;align-items:center;gap:1px;flex:none}
+.kitsw i{display:block}
+.kitsw .ks{width:18px;height:13px;border-radius:4px 4px 2px 2px;border:1px solid var(--kitline)}
+.kitsw .kp{width:13px;height:6px;border-radius:0 0 2px 2px;border:1px solid var(--kitline);border-top:none}
+.opp{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.opp .lv{margin-right:0}
+.clash{font-size:11.5px;font-weight:600;color:var(--rosa-ink);background:var(--rosa-soft);border-radius:5px;padding:1px 6px}
+.rk{display:inline-flex;align-items:center;gap:8px}
+.kitlist{display:grid;grid-template-columns:repeat(2,1fr);background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kitrow{display:flex;align-items:center;gap:10px;padding:9px 12px;min-width:0;border-top:1px solid var(--line)}
+.kitrow:nth-child(-n+2){border-top:none}
+.kitrow.me{background:var(--rosa-soft)}
+.kitrow b{font-weight:600;font-size:14px;overflow-wrap:anywhere}
+.kitrow span{display:block;font-size:12.5px;color:var(--muted)}
+
+/* Goalkeeper shirt */
+.shirt.gk{background-color:#173A82;background-image:url("img/marmol-azul.jpg")}
+.gk-tag{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#173A82;border-radius:5px;padding:1px 6px}
+.player .full{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.25}
+
 @media (max-width:520px){
+  .kitlist{grid-template-columns:1fr}
+  .kitrow:nth-child(2){border-top:1px solid var(--line)}
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(3){border-left:none}
   .stat:nth-child(n+3){border-top:1px solid var(--line)}
@@ -242,7 +270,21 @@ const dayStart = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mapUrl = site => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((VENUES[site] || {q:site + " Madrid"}).q);
 
-let MATCHES = [], MINE = [], TEAMS = [], RES = {}, SQUAD = [], UPDATED = null;
+let MATCHES = [], MINE = [], TEAMS = [], RES = {}, SQUAD = [], UPDATED = null, KITS = {}, PREV = null;
+
+function kitSwatch(team){
+  const k = KITS[team]; if (!k) return "";
+  const c = k.colores || [];
+  let bg = c[0] || "transparent";
+  if (c.length > 1 && k.dibujo === "franja") bg = `linear-gradient(180deg, ${c[0]} 0 36%, ${c[1]} 36% 64%, ${c[0]} 64%)`;
+  else if (c.length > 1) bg = `repeating-linear-gradient(90deg, ${c[0]} 0 3px, ${c[1]} 3px 6px)`;
+  return `<span class="kitsw" title="${esc(k.camiseta)}, pantalón ${esc(k.pantalon.toLowerCase())}" aria-hidden="true"><i class="ks" style="background:${bg}"></i><i class="kp" style="background:${k.pantalonColor}"></i></span>`;
+}
+function kitText(team){ const k = KITS[team]; return k ? k.camiseta + ", pantalón " + k.pantalon.toLowerCase() : ""; }
+function clashTag(team){
+  const a = KITS[team], b = KITS[TEAM];
+  return a && b && a.camiseta.toLowerCase() === b.camiseta.toLowerCase() ? `<span class="clash">También visten de ${esc(b.camiseta.toLowerCase())}</span>` : "";
+}
 let tab = "partidos";
 const flipped = {rosa:false, portero:false};
 
@@ -274,6 +316,7 @@ function renderNext(){
   const m = nextMine();
   if (!m){ el.innerHTML = `<div class="next-top"><span class="label">Temporada</span></div><p class="note">No quedan partidos por jugar.</p>`; return; }
   const homeMe = m.local === TEAM;
+  const opp = homeMe ? m.visitante : m.local;
   el.innerHTML = `
     <div class="next-top"><span class="label">Próximo partido · Jornada ${m.jornada}</span><span class="chip">${countdown(m)}</span></div>
     <div class="fixture">
@@ -285,6 +328,7 @@ function renderNext(){
       <span><b>${cap(fmtDay(m.dt))}</b></span><span><b>${m.hora}</b></span>
       <span>${esc(m.sede)} · campo ${esc(m.campo)}</span>
       <a href="${mapUrl(m.sede)}" target="_blank" rel="noopener">Cómo llegar</a>
+      ${KITS[opp] ? `<span class="rk">${kitSwatch(opp)}Ellos: ${esc(kitText(opp).toLowerCase())}</span>${clashTag(opp)}` : ""}
     </div>`;
 }
 
@@ -309,7 +353,7 @@ function renderPartidos(){
     return `<div class="row ${isNext ? "is-next" : ""}">
       <div class="jn tnum"><small>J</small>${m.jornada}</div>
       <div class="mid">
-        <span class="opp"><span class="lv ${homeMe ? "L" : "V"}" title="${homeMe ? "Local" : "Visitante"}">${homeMe ? "LOCAL" : "VISIT."}</span>${esc(opp)}</span>
+        <span class="opp"><span class="lv ${homeMe ? "L" : "V"}" title="${homeMe ? "Local" : "Visitante"}">${homeMe ? "LOCAL" : "VISIT."}</span><span>${esc(opp)}</span>${kitSwatch(opp)}${clashTag(opp)}</span>
         <span class="when tnum">${cap(fmtDay(m.dt))} · ${m.hora} · ${esc(m.sede)}, campo ${esc(m.campo)}</span>
       </div>
       <div class="end">${end}</div>
@@ -336,7 +380,26 @@ function renderTabla(){
     ${any ? "" : `<p class="note" style="margin-bottom:10px">La liga empieza el ${fmtDay(MATCHES[0].dt)}. Hasta el primer resultado, los equipos van por orden alfabético.</p>`}
     <div class="tablebox"><table>
       <thead><tr><th>#</th><th class="team">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>Pts</th><th>Últimos</th></tr></thead>
-      <tbody>${body}</tbody></table></div></section>`;
+      <tbody>${body}</tbody></table></div></section>` + renderKits() + renderPrev();
+}
+
+function renderKits(){
+  if (!Object.keys(KITS).length) return "";
+  const rows = TEAMS.map(t => `<div class="kitrow ${t === TEAM ? "me" : ""}">${kitSwatch(t)}<div style="min-width:0"><b>${esc(t)}</b><span>${esc(kitText(t)) || "Sin datos"}</span></div></div>`).join("");
+  return `<section><h2>Equipaciones del grupo</h2><p class="note" style="margin-bottom:10px">Primera equipación que ha declarado cada equipo.</p><div class="kitlist">${rows}</div></section>`;
+}
+
+function renderPrev(){
+  if (!PREV || !Array.isArray(PREV.clasificacion)) return "";
+  const me = PREV.clasificacion.find(r => r.equipo === PREV.nosotros);
+  const rows = PREV.clasificacion.map(r => `<tr class="${r.equipo === PREV.nosotros ? "me" : ""}">
+    <td class="pos">${r.pos}</td><td class="team">${esc(r.equipo)}</td><td>${r.pj}</td><td>${r.g}</td><td>${r.e}</td><td>${r.p}</td>
+    <td>${r.gf}</td><td>${r.gc}</td><td>${r.gf - r.gc > 0 ? "+" : ""}${r.gf - r.gc}</td><td class="pts">${r.pts}</td></tr>`).join("");
+  return `<section><h2>Temporada ${esc(PREV.temporada)}</h2>
+    <p class="note" style="margin-bottom:10px">${esc(PREV.grupo)}.${me ? ` Terminamos ${me.pos}º con ${me.pts} puntos.` : ""} Datos de <a href="${esc(PREV.fuenteUrl)}" target="_blank" rel="noopener">jdmmadrid.es</a>, una web no oficial; en algunos equipos los partidos y los puntos no cuadran del todo.</p>
+    <div class="tablebox"><table>
+      <thead><tr><th>#</th><th class="team">Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>Pts</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></section>`;
 }
 
 function renderJornadas(){
@@ -360,24 +423,30 @@ function renderJornadas(){
 }
 
 function renderPlantilla(){
-  const shirts = SQUAD.map(p => {
+  const hasNum = p => p.dorsal !== null && p.dorsal !== undefined && p.dorsal !== "";
+  const longest = s => Math.max(...String(s).split(/\s+/).map(w => w.length));
+  const sorted = [...SQUAD].sort((a,b) => (hasNum(a) ? +a.dorsal : 999) - (hasNum(b) ? +b.dorsal : 999));
+  const shirts = sorted.map(p => {
     const label = p.camiseta || p.nombre;
-    const num = (p.dorsal !== null && p.dorsal !== undefined && p.dorsal !== "") ? `<span class="num tnum">${esc(p.dorsal)}</span>` : `<span class="num pend">dorsal por poner</span>`;
-    return `<div class="player"><div class="shirt" role="img" aria-label="Camiseta de ${esc(p.nombre)}"><span class="sn">${esc(label)}</span>${num}</div><span class="who">${esc(p.nombre)}</span></div>`;
+    const num = hasNum(p) ? `<span class="num tnum">${esc(p.dorsal)}</span>` : `<span class="num pend">dorsal por poner</span>`;
+    return `<div class="player">
+      <div class="shirt ${p.portero ? "gk" : ""}" role="img" aria-label="${esc(p.nombre)}: ${esc(label)}${hasNum(p) ? ", dorsal " + esc(p.dorsal) : ""}${p.portero ? ", portero" : ""}"><span class="sn ${longest(label) > 6 ? "s" : longest(label) > 4 ? "m" : ""}">${esc(label)}</span>${num}</div>
+      <span class="full">${esc(p.nombre)}${p.portero ? `<br><span class="gk-tag">Portero</span>` : ""}</span>
+    </div>`;
   }).join("");
   const kit = (key, title, sub, front, back) => `<figure class="kit" style="margin:0">
       <img src="${flipped[key] ? back : front}" alt="${title}, ${flipped[key] ? "espalda" : "frente"}" width="465" height="760" loading="lazy">
       <figcaption class="cap"><div><b>${title}</b><br><span>${sub}</span></div><button class="flip" data-flip="${key}">${flipped[key] ? "Ver frente" : "Ver espalda"}</button></figcaption>
     </figure>`;
   document.getElementById("p-plantilla").innerHTML = `
-    <section><h2>Plantilla 2026/27</h2><p class="note" style="margin-bottom:12px">${SQUAD.length} inscritos. Los nombres de la camiseta y los dorsales están por confirmar.</p>
+    <section><h2>Plantilla 2026/27</h2><p class="note" style="margin-bottom:12px">${SQUAD.length} jugadores, con el nombre y el dorsal de su camiseta.</p>
       <div class="squad">${shirts}</div></section>
     <section><h2>Equipaciones</h2>
       <div class="kits">
         ${kit("rosa","Rosa","Jugadores","img/kit-rosa.jpg","img/kit-rosa-espalda.jpg")}
         ${kit("portero","Azul","Portero","img/kit-portero.jpg","img/kit-portero-espalda.jpg")}
       </div>
-      <p class="old" style="margin-top:12px"><span class="sw" aria-hidden="true"><i style="background:#F5D20A"></i><i style="background:#1E50B4"></i></span>Hasta 2024/25 jugábamos de amarillo con pantalón azul.</p>
+      <p class="old" style="margin-top:12px"><span class="sw" aria-hidden="true"><i style="background:#F5D20A"></i><i style="background:#1E50B4"></i></span>La equipación anterior era amarilla con pantalón azul.</p>
     </section>`;
 }
 
@@ -411,7 +480,10 @@ async function getJSON(path){
 }
 (async function load(){
   try {
-    const [partidos, resultados, plantilla] = await Promise.all([getJSON("data/partidos.json"), getJSON("data/resultados.json"), getJSON("data/plantilla.json")]);
+    const optional = p => getJSON(p).catch(() => null);
+    const [partidos, resultados, plantilla, equipos, previa] = await Promise.all([getJSON("data/partidos.json"), getJSON("data/resultados.json"), optional("data/plantilla.json"), optional("data/equipos.json"), optional("data/temporada-2025-26.json")]);
+    KITS = (equipos && equipos.equipos) || {};
+    PREV = previa;
     MATCHES = partidos.map(m => ({...m, campo:String(m.campo), dt:new Date(m.fecha + "T" + m.hora + ":00")}));
     MINE = MATCHES.filter(m => m.local === TEAM || m.visitante === TEAM).sort((a,b) => a.jornada - b.jornada);
     TEAMS = [...new Set(MATCHES.flatMap(m => [m.local, m.visitante]))].sort((a,b) => a.localeCompare(b,"es"));

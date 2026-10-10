@@ -1,0 +1,107 @@
+{
+  "fuente": "Primera equipación declarada por cada equipo (Ayuntamiento de Madrid)",
+  "equipos": {
+    "Amigos de la Peña": {
+      "camiseta": "Azul con franja amarilla",
+      "pantalon": "Azul",
+      "colores": [
+        "#1F4FB5",
+        "#F2C500"
+      ],
+      "dibujo": "franja",
+      "pantalonColor": "#1F4FB5"
+    },
+    "Astra Plosca Madrid": {
+      "camiseta": "Azul",
+      "pantalon": "Negro",
+      "colores": [
+        "#1F4FB5"
+      ],
+      "pantalonColor": "#161616"
+    },
+    "Chocolate Sexy": {
+      "camiseta": "Rosa",
+      "pantalon": "Negro",
+      "colores": [
+        "#E0288A"
+      ],
+      "pantalonColor": "#161616"
+    },
+    "CHOPERA F.C.": {
+      "camiseta": "Azul turquesa",
+      "pantalon": "Negro",
+      "colores": [
+        "#12A5B0"
+      ],
+      "pantalonColor": "#161616"
+    },
+    "CLUB PEN WIN": {
+      "camiseta": "Azul clarito",
+      "pantalon": "Azul oscuro",
+      "colores": [
+        "#7DB8E8"
+      ],
+      "pantalonColor": "#1B2F66"
+    },
+    "F X MAC FC": {
+      "camiseta": "Azul",
+      "pantalon": "Azul oscuro",
+      "colores": [
+        "#1F4FB5"
+      ],
+      "pantalonColor": "#1B2F66"
+    },
+    "Inafuma Ibeben": {
+      "camiseta": "Rosa",
+      "pantalon": "Rosa",
+      "colores": [
+        "#D81F80"
+      ],
+      "pantalonColor": "#D81F80"
+    },
+    "La Competencia": {
+      "camiseta": "Azul y blanca",
+      "pantalon": "Azul",
+      "colores": [
+        "#1F4FB5",
+        "#FFFFFF"
+      ],
+      "dibujo": "rayas",
+      "pantalonColor": "#1F4FB5"
+    },
+    "MELVIN": {
+      "camiseta": "Negra",
+      "pantalon": "Negro",
+      "colores": [
+        "#161616"
+      ],
+      "pantalonColor": "#161616"
+    },
+    "Panza y Gloria": {
+      "camiseta": "Roja y negra",
+      "pantalon": "Negro",
+      "colores": [
+        "#C8202A",
+        "#161616"
+      ],
+      "dibujo": "rayas",
+      "pantalonColor": "#161616"
+    },
+    "PLATA O PLOMO FC": {
+      "camiseta": "Blanca",
+      "pantalon": "Negro",
+      "colores": [
+        "#FFFFFF"
+      ],
+      "pantalonColor": "#161616"
+    },
+    "Soccer 7": {
+      "camiseta": "Roja",
+      "pantalon": "Azul",
+      "colores": [
+        "#C8202A"
+      ],
+      "pantalonColor": "#1F4FB5"
+    }
+  }
+}
