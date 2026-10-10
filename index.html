@@ -205,6 +205,13 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 .kitrow b{font-weight:600;font-size:14px;overflow-wrap:anywhere}
 .kitrow span{display:block;font-size:12.5px;color:var(--muted)}
 
+/* PDF download */
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.sec-head h2{margin:0}
+.dl{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;border:1.5px solid var(--oro);color:var(--fg);background:var(--surface);font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap}
+.dl svg{color:var(--rosa)}
+.dl:hover{background:var(--rosa-soft)}
+
 /* Goalkeeper shirt */
 .shirt.gk{background-color:#173A82;background-image:url("img/marmol-azul.jpg")}
 .gk-tag{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#173A82;border-radius:5px;padding:1px 6px}
@@ -367,7 +374,11 @@ function renderPartidos(){
     </div>`;
   }).join("");
   document.getElementById("p-partidos").innerHTML = `
-    <section><h2>Nuestros 22 partidos</h2><div class="list">${rows}</div></section>
+    <section>
+      <div class="sec-head"><h2>Nuestros 22 partidos</h2>
+        <a class="dl" href="calendario-inafuma-ibeben.pdf" download="Inafuma-Ibeben-calendario-2026-27.pdf"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M8 1.5v8.2M4.6 6.6 8 10l3.4-3.4M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendario en PDF</a>
+      </div>
+      <div class="list">${rows}</div></section>
     <section><h2>Campos</h2><div class="venues">${Object.keys(VENUES).map(s => `
       <div class="venue"><b>${esc(s)}</b>
         <span>${counts[s] || 0} partidos · ${fields[s] ? "campos " + [...fields[s]].sort().join(" y ") : ""}</span>

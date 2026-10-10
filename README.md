@@ -13,3 +13,11 @@ Es una web estática: Vercel publica `index.html` tal cual, sin configuración.
 Otros datos: `data/equipos.json` (primera equipación de cada equipo del grupo) y `data/temporada-2025-26.json` (clasificación de la temporada pasada).
 
 La clasificación se calcula sola a partir de los resultados.
+
+## Calendario en PDF
+
+`calendario-inafuma-ibeben.pdf` se descarga desde la pestaña Partidos. Si cambia una hora o un campo en `data/partidos.json`, se vuelve a generar con:
+
+    python3 tools/calendario_pdf.py
+
+(necesita `reportlab`; las tipografías están en `tools/fonts`).
