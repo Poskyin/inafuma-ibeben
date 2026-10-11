@@ -4,85 +4,105 @@
       "dorsal": 1,
       "nombre": "Eduard Sebastián",
       "camiseta": "Sevans",
-      "portero": true
+      "portero": true,
+      "capitan": 2
     },
     {
       "dorsal": 2,
       "nombre": "Gabriel Tarcaya",
       "camiseta": "Tarcaya",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 3,
       "nombre": "Adrián Cota",
       "camiseta": "Cofer",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 4,
       "nombre": "Saúl de Pablo",
       "camiseta": "de Pablo",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 5,
       "nombre": "Fabio Quesada",
       "camiseta": "Fabiote",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 6,
       "nombre": "David de Pablo",
       "camiseta": "Romero",
-      "portero": false
+      "portero": false,
+      "capitan": 1
     },
     {
       "dorsal": 7,
       "nombre": "Lucas Merino",
       "camiseta": "Merino",
-      "portero": false
+      "portero": false,
+      "capitan": 3
     },
     {
       "dorsal": 8,
       "nombre": "Diego Gómez",
       "camiseta": "Gallu",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 9,
       "nombre": "Pablo Córdoba",
       "camiseta": "Mako",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 10,
       "nombre": "Bruno Sanz",
       "camiseta": "Santos",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 11,
       "nombre": "Daniel de Pablo",
       "camiseta": "Dani JR",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 13,
       "nombre": "Iván Cadenas",
       "camiseta": "Cadenas",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 14,
       "nombre": "Marcos Lafuente",
       "camiseta": "Rubio",
-      "portero": false
+      "portero": false,
+      "capitan": null
     },
     {
       "dorsal": 15,
       "nombre": "Adrián Curieses",
       "camiseta": "Curinho",
-      "portero": false
+      "portero": false,
+      "capitan": null
+    }
+  ],
+  "staff": [
+    {
+      "nombre": "Carlos Gómez Gómez",
+      "rol": "Delegado"
     }
   ]
 }

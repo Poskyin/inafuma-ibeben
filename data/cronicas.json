@@ -1,0 +1,4 @@
+{
+  "_ayuda": "Una crónica por partido. 'partido' es el id de data/partidos.json (por ejemplo j01-6). 'texto' admite varios párrafos separados por una línea en blanco.",
+  "cronicas": []
+}

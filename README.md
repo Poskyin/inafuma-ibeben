@@ -8,7 +8,8 @@ Es una web estática: Vercel publica `index.html` tal cual, sin configuración.
 
 - `data/resultados.json`: los resultados por partido (`"j01-6": [goles local, goles visitante]`) y la fecha de `actualizado`.
 - `data/partidos.json`: solo si el Ayuntamiento cambia una hora o un campo.
-- `data/plantilla.json`: jugadores, nombre en la camiseta, dorsal y quién es portero.
+- `data/plantilla.json`: jugadores (nombre en la camiseta, dorsal, portero, capitán 1/2/3) y `staff` (delegado).
+- `data/cronicas.json`: una crónica por partido, con `partido` (id de `data/partidos.json`), `autor`, `titulo` y `texto`. Mientras esté vacío, la pestaña Crónicas muestra "Próximamente".
 
 Otros datos: `data/equipos.json` (primera equipación de cada equipo del grupo) y `data/temporada-2025-26.json` (clasificación de la temporada pasada).
 
