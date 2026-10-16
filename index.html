@@ -208,6 +208,7 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 /* PDF download */
 .sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .sec-head h2{margin:0}
+.dls{display:flex;gap:6px;flex-wrap:wrap}
 .dl{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;border:1.5px solid var(--oro);color:var(--fg);background:var(--surface);font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap}
 .dl svg{color:var(--rosa)}
 .dl:hover{background:var(--rosa-soft)}
@@ -419,9 +420,10 @@ function renderPartidos(){
   }).join("");
   document.getElementById("p-partidos").innerHTML = `
     <section>
-      <div class="sec-head"><h2>Nuestros 22 partidos</h2>
+      <div class="sec-head"><h2>Nuestros 22 partidos</h2><div class="dls">
         <a class="dl" href="calendario-inafuma-ibeben.pdf" download="Inafuma-Ibeben-calendario-2026-27.pdf"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M8 1.5v8.2M4.6 6.6 8 10l3.4-3.4M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendario en PDF</a>
-      </div>
+        <a class="dl" href="calendario-inafuma-ibeben.jpg" download="Inafuma-Ibeben-calendario-2026-27.jpg"><svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M8 1.5v8.2M4.6 6.6 8 10l3.4-3.4M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Calendario en foto</a>
+      </div></div>
       <div class="list">${rows}</div></section>
     <section><h2>Campos</h2><div class="venues">${Object.keys(VENUES).map(s => `
       <div class="venue"><b>${esc(s)}</b>
