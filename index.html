@@ -240,6 +240,8 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 .follow .lbl{flex-basis:100%;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#F2CF7C}
 .follow a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid #F2CF7C;background:rgba(40,4,24,.28);color:var(--hero-ink);font-weight:600;font-size:13px;text-decoration:none;white-space:nowrap}
 .follow a:hover{background:rgba(40,4,24,.45)}
+.follow .share{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1.5px solid #F2CF7C;background:#F2CF7C;color:#3A2208;font:inherit;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
+.follow .share:hover{background:#FFE09A}
 .follow a svg{flex:none}
 
 /* Chronicles */
@@ -284,6 +286,7 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
         <span class="lbl">Síguenos</span>
         <a href="https://www.instagram.com/inafuma.ibebenfc/" target="_blank" rel="noopener" title="@inafuma.ibebenfc en Instagram">Instagram<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="https://www.tiktok.com/@inafuma_ibeben_fc" target="_blank" rel="noopener" title="@inafuma_ibeben_fc en TikTok">TikTok<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="share" id="share" type="button"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M8 10V2M4.8 5.2 8 2l3.2 3.2M3 9v4.5h10V9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Compartir la web</span></button>
       </div>
     </div>
   </div>
@@ -324,6 +327,17 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 </main>
 
 <script>
+(function(){
+  const btn=document.getElementById('share'), lbl=btn.querySelector('span'), url='https://inafuma-ibeben.vercel.app/';
+  const data={title:'Inafuma Ibeben C.F.',text:'Calendario, resultados y clasificación del Inafuma Ibeben C.F.',url};
+  let t;
+  const flash=msg=>{lbl.textContent=msg;clearTimeout(t);t=setTimeout(()=>{lbl.textContent='Compartir la web'},2200)};
+  btn.addEventListener('click',async()=>{
+    if(navigator.share){try{await navigator.share(data);return}catch(e){if(e&&e.name==='AbortError')return}}
+    try{await navigator.clipboard.writeText(url);flash('Enlace copiado')}
+    catch(e){window.open('https://wa.me/?text='+encodeURIComponent(data.text+' '+url),'_blank','noopener')}
+  });
+})();
 const TEAM = "Inafuma Ibeben";
 const TABS = ["partidos","clasificacion","jornadas","plantilla","cronicas"];
 const VENUES = {
