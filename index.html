@@ -186,6 +186,12 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 .venue span{font-size:13px;color:var(--muted)}
 .venue a{font-size:13px;font-weight:600;color:var(--rosa-ink)}
 
+.game-link{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--rosa);border-radius:12px;padding:12px 14px;margin-block:4px 2px}
+.game-link:hover{border-color:var(--rosa)}
+.gl-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gl-txt b{font-family:var(--f-display);font-weight:800;font-size:21px;text-transform:uppercase;line-height:1}
+.gl-txt span{font-size:13.5px;color:var(--muted)}
+.gl-go{flex:none;font-weight:700;color:var(--rosa-ink);font-size:14px}
 .foot{border-top:2px solid var(--oro);padding-top:12px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:4px}
 .err{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;color:var(--muted)}
 
@@ -290,6 +296,11 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
   </section>
 
   <div id="stats" class="stats tnum" aria-label="Resumen de la temporada"></div>
+
+  <a class="game-link" href="juego/">
+    <span class="gl-txt"><b>Fútbol 7 por turnos</b><span>Juega una pachanga o contra un rival del grupo, y prepara la alineación.</span></span>
+    <span class="gl-go" aria-hidden="true">Jugar →</span>
+  </a>
 
   <nav class="tabs" role="tablist" aria-label="Secciones">
     <button id="tab-partidos" role="tab" aria-selected="true" aria-controls="p-partidos" data-tab="partidos">Partidos</button>

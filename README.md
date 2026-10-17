@@ -22,3 +22,7 @@ La clasificación se calcula sola a partir de los resultados.
     python3 tools/calendario_pdf.py
 
 (necesita `reportlab`; las tipografías están en `tools/fonts`).
+
+## Juego (`juego/`)
+
+`juego/index.html` es el juego de fútbol 7 por turnos y la pizarra de alineación. Es una página autónoma (las imágenes van dentro del propio archivo). La plantilla del juego está escrita en el propio archivo (`SQUAD`), así que si cambia la plantilla hay que actualizarla también ahí.
