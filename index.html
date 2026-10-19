@@ -22,14 +22,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Outfit:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E8%91%89%E5%B7%BB%E8%BF%91%E6%89%80&display=swap">
 <script>
-/* Halloween look: on automatically from 19 Oct to 1 Nov (viewer's local date). ?tema=halloween or ?tema=normal to force it. */
-(function(){try{
-  var d=new Date(), m=d.getMonth()+1, day=d.getDate();
-  var on=(m===10&&day>=19)||(m===11&&day<=1);
-  var q=new URLSearchParams(location.search).get('tema');
-  if(q==='halloween')on=true; if(q==='normal')on=false;
-  if(on){document.documentElement.classList.add('halloween');var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute('content','#120A10');}
-}catch(e){}})();
+/* Halloween look: on automatically from 19 Oct to 1 Nov (viewer's local date).
+   Each viewer can switch it off with the pumpkin button (remembered in this browser).
+   ?tema=halloween or ?tema=normal forces it. */
+(function(){
+  var st={available:false,on:false};
+  try{
+    var d=new Date(), m=d.getMonth()+1, day=d.getDate();
+    var inWindow=(m===10&&day>=19)||(m===11&&day<=1);
+    var pref=null; try{pref=localStorage.getItem('ii-halloween')}catch(e){}
+    var q=new URLSearchParams(location.search).get('tema');
+    st.available=inWindow||q==='halloween';
+    st.on=inWindow&&pref!=='off';
+    if(q==='halloween')st.on=true; if(q==='normal')st.on=false;
+    if(st.on){document.documentElement.classList.add('halloween');var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute('content','#120A10');}
+  }catch(e){}
+  window.__hw=st;
+})();
 </script>
 <style>
 /* Layout: pink-and-gold marble hero with the crest, a cream match card overlapping it, then a sticky four-way switch over lists, a table and the squad as shirt backs. */
@@ -314,10 +323,97 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 .halloween .bat.b2{animation-duration:1.2s;animation-delay:-.4s}
 .halloween .bat.b3{animation-duration:2s;animation-delay:-.9s}
 @keyframes flap{0%,100%{scale:1 1}50%{scale:1 .55}}
-@media (prefers-reduced-motion:reduce){.halloween .bat{animation:none}}
+.halloween .bat.b4{animation-duration:1.4s;animation-delay:-.2s}
+.halloween .bat.b5{animation-duration:1.8s;animation-delay:-1.1s}
+
+/* Night sky: a few faint stars behind the whole page */
+.halloween body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1.2px 1.2px at 8% 30%,rgba(255,240,225,.55) 50%,transparent 52%),
+    radial-gradient(1px 1px at 22% 62%,rgba(255,240,225,.4) 50%,transparent 52%),
+    radial-gradient(1.4px 1.4px at 37% 18%,rgba(255,240,225,.5) 50%,transparent 52%),
+    radial-gradient(1px 1px at 51% 78%,rgba(255,240,225,.35) 50%,transparent 52%),
+    radial-gradient(1.2px 1.2px at 66% 44%,rgba(255,240,225,.45) 50%,transparent 52%),
+    radial-gradient(1px 1px at 79% 70%,rgba(255,240,225,.4) 50%,transparent 52%),
+    radial-gradient(1.4px 1.4px at 91% 26%,rgba(255,240,225,.5) 50%,transparent 52%),
+    radial-gradient(1px 1px at 14% 88%,rgba(255,240,225,.35) 50%,transparent 52%),
+    radial-gradient(1.2px 1.2px at 58% 8%,rgba(255,240,225,.45) 50%,transparent 52%),
+    radial-gradient(1px 1px at 86% 92%,rgba(255,240,225,.35) 50%,transparent 52%)}
+
+/* Fog drifting along the bottom of the header */
+.halloween .hero::before{content:"";position:absolute;z-index:1;left:-20%;right:-20%;bottom:-10px;height:120px;pointer-events:none;
+  background:
+    radial-gradient(40% 70% at 22% 100%,rgba(255,230,242,.20),transparent 70%),
+    radial-gradient(35% 60% at 62% 100%,rgba(255,230,242,.16),transparent 70%),
+    radial-gradient(30% 55% at 92% 100%,rgba(255,230,242,.14),transparent 70%);
+  filter:blur(4px);animation:fog 16s ease-in-out infinite alternate}
+@keyframes fog{from{transform:translateX(-6%)}to{transform:translateX(6%)}}
+
+/* Spider hanging from the web */
+.halloween .spider{animation:dangle 4.5s ease-in-out infinite}
+@keyframes dangle{0%,100%{transform:translateY(0)}50%{transform:translateY(16px)}}
+
+/* Jack-o'-lantern sitting on the next-match card */
+.halloween .next::before{content:"";position:absolute;right:16px;top:-46px;width:58px;height:53px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 58'%3E%3Cpath d='M30 12c-.6-5 1.6-9.4 6.4-11.2l1.4 3c-3.2 1.4-4.4 4.2-4 8.2z' fill='%233B6B2A'/%3E%3Cellipse cx='19' cy='35' rx='15' ry='19' fill='%23E8600C'/%3E%3Cellipse cx='45' cy='35' rx='15' ry='19' fill='%23E8600C'/%3E%3Cellipse cx='32' cy='34' rx='17' ry='21.5' fill='%23FF7A1A'/%3E%3Cpath d='M32 13c-3 6-3 36 0 42M22 16c-5 7-5 31 0 38M42 16c5 7 5 31 0 38' fill='none' stroke='%23C94E08' stroke-width='1.2' opacity='.7'/%3E%3Cpath d='M19 29h8l-4-7zM37 29h8l-4-7zM30 36h4l-2-4z' fill='%23FFD54A'/%3E%3Cpath d='M16 39c5 9 27 9 32 0l-4 1.4-2 3.2-3-3-3.4 3.6L32 40.6l-3.6 3.6-3.4-3.6-3 3-2-3.2z' fill='%23FFD54A'/%3E%3C/svg%3E") no-repeat center/contain;
+  filter:drop-shadow(0 0 10px rgba(255,150,40,.55));animation:flicker 3.2s ease-in-out infinite}
+@keyframes flicker{0%,100%{filter:drop-shadow(0 0 10px rgba(255,150,40,.55))}40%{filter:drop-shadow(0 0 16px rgba(255,180,60,.8))}55%{filter:drop-shadow(0 0 7px rgba(255,140,30,.45))}}
+.halloween .next-top{padding-right:64px}
+
+/* Section titles with a faint candle glow */
+.halloween h2{text-shadow:0 0 18px rgba(255,122,26,.35)}
+
+/* Pumpkin switch (bottom right) */
+.hw-toggle{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;width:48px;height:48px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;padding:0;
+  background:var(--surface);border:2px solid var(--rosa);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.hw-toggle svg{width:30px;height:30px}
+.hw-toggle .x{display:none}
+.halloween .hw-toggle{border-color:var(--calabaza);box-shadow:0 0 0 4px rgba(255,122,26,.15),0 8px 22px rgba(0,0,0,.5)}
+.halloween .hw-toggle .x{display:block}
+.hw-toggle .tip{position:absolute;right:62px;top:50%;transform:translateY(-50%);white-space:nowrap;background:var(--fg);color:var(--bg);font-size:12.5px;font-weight:600;padding:5px 9px;border-radius:7px;opacity:0;pointer-events:none;transition:opacity .15s}
+.hw-toggle:focus-visible .tip{opacity:1}
+@media (hover:hover){.hw-toggle:hover .tip{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){.halloween .bat,.halloween .spider,.halloween .hero::before,.halloween .next::before{animation:none}}
 </style>
 </head>
 <body>
+
+<button class="hw-toggle" id="hw-toggle" type="button" hidden aria-pressed="true" aria-label="Quitar la ambientación de Halloween">
+  <svg viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M15 8.5c-.3-2.6.9-4.9 3.4-5.9l.8 1.6c-1.7.7-2.3 2.2-2.1 4.3z" fill="#3B6B2A"/>
+    <ellipse cx="10.5" cy="18" rx="7.5" ry="9.5" fill="#E8600C"/>
+    <ellipse cx="21.5" cy="18" rx="7.5" ry="9.5" fill="#E8600C"/>
+    <ellipse cx="16" cy="17.5" rx="8.5" ry="10.5" fill="#FF7A1A"/>
+    <path d="M10 15h4l-2-3.5zM18 15h4l-2-3.5zM9 20c2.5 4.5 11.5 4.5 14 0l-2 .7-1 1.6-1.5-1.5-1.7 1.8-1.8-1.8-1.7 1.8-1.5-1.5-1 1.6z" fill="#FFD54A"/>
+    <g class="x"><circle cx="25.5" cy="25.5" r="5.5" fill="#1A0905" stroke="#FF7A1A" stroke-width="1.2"/><path d="M23.3 23.3l4.4 4.4M27.7 23.3l-4.4 4.4" stroke="#FFF" stroke-width="1.6" stroke-linecap="round"/></g>
+  </svg>
+  <span class="tip">Quitar Halloween</span>
+</button>
+<script>
+(function(){
+  var b=document.getElementById('hw-toggle'), st=window.__hw||{};
+  if(!b||!st.available)return;
+  b.hidden=false;
+  var root=document.documentElement, tip=b.querySelector('.tip'), meta=document.querySelector('meta[name="theme-color"]');
+  function sync(){
+    var on=root.classList.contains('halloween');
+    var txt=on?'Quitar Halloween':'Poner Halloween';
+    b.setAttribute('aria-pressed',String(on));
+    b.setAttribute('aria-label',on?'Quitar la ambientación de Halloween':'Poner la ambientación de Halloween');
+    tip.textContent=txt;
+    if(meta)meta.setAttribute('content',on?'#120A10':'#D81F80');
+  }
+  b.addEventListener('click',function(){
+    var on=!root.classList.contains('halloween');
+    root.classList.toggle('halloween',on);
+    try{localStorage.setItem('ii-halloween',on?'on':'off')}catch(e){}
+    sync();
+  });
+  sync();
+})();
+</script>
 
 <header class="hero">
   <svg class="spooky" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMaxYMin slice">
@@ -331,6 +427,18 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
       <path class="bat b1" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(250 92) scale(1.25)"/>
       <path class="bat b2" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(318 132) scale(.8)"/>
       <path class="bat b3" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(212 40) scale(.65)"/>
+      <path class="bat b4" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(150 150) scale(.55)"/>
+      <path class="bat b5" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(278 20) scale(.5)"/>
+    </g>
+    <g class="spider">
+      <line x1="386" y1="-80" x2="386" y2="58" stroke="rgba(255,240,225,.45)" stroke-width=".8"/>
+      <g transform="translate(386 64)" stroke="#0E0309" stroke-width="1.3" fill="none" stroke-linecap="round">
+        <path d="M-3-2-9-7-12-3M-3 0-11-1-14 3M-3 2-10 5-12 10M-2 3-6 9-7 14M3-2 9-7 12-3M3 0 11-1 14 3M3 2 10 5 12 10M2 3 6 9 7 14"/>
+        <ellipse cx="0" cy="3" rx="5" ry="6" fill="#0E0309" stroke="rgba(255,240,225,.35)" stroke-width=".6"/>
+        <circle cx="0" cy="-4" r="3.2" fill="#0E0309" stroke="rgba(255,240,225,.35)" stroke-width=".6"/>
+        <circle cx="-1.2" cy="-4.4" r=".8" fill="#FF7A1A" stroke="none"/>
+        <circle cx="1.2" cy="-4.4" r=".8" fill="#FF7A1A" stroke="none"/>
+      </g>
     </g>
   </svg>
   <div class="hero-inner">
