@@ -322,7 +322,7 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
   <footer class="foot">
     <span id="updated">Resultados actualizados: –</span>
     <span>Calendario oficial en la <a href="https://deportesweb.madrid.es/DeportesWeb/Home" target="_blank" rel="noopener">web de deportes del Ayuntamiento de Madrid</a> (Competiciones municipales → Consulta de partidos). Los cambios de hora o campo salen allí antes.</span>
-    <span>Clasificación calculada con los resultados de esta página: 3 puntos por victoria y 1 por empate; a igualdad de puntos, diferencia de goles y después goles a favor.</span>
+    <span>Clasificación calculada con los resultados de esta página (3 puntos por victoria y 1 por empate); a igualdad de puntos, en el orden de la clasificación oficial del Ayuntamiento.</span>
   </footer>
 </main>
 
@@ -353,7 +353,7 @@ const dayStart = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mapUrl = site => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent((VENUES[site] || {q:site + " Madrid"}).q);
 
-let MATCHES = [], MINE = [], TEAMS = [], RES = {}, SQUAD = [], STAFF = [], UPDATED = null, KITS = {}, PREV = null, CRONICAS = [];
+let MATCHES = [], MINE = [], TEAMS = [], RES = {}, SQUAD = [], STAFF = [], UPDATED = null, KITS = {}, PREV = null, CRONICAS = [], ORDER = [];
 const cronicaOf = id => CRONICAS.find(c => c.partido === id);
 
 function kitSwatch(team){
@@ -387,7 +387,10 @@ function standings(){
     if (r.h > r.a){ H.g++; A.p++; H.pts += 3; } else if (r.h < r.a){ A.g++; H.p++; A.pts += 3; } else { H.e++; A.e++; H.pts++; A.pts++; }
     H.form.push(outcomeFor(m.local, m, r)); A.form.push(outcomeFor(m.visitante, m, r));
   });
-  return Object.values(t).sort((x,y) => y.pts - x.pts || (y.gf-y.gc) - (x.gf-x.gc) || y.gf - x.gf || x.team.localeCompare(y.team,"es"));
+  const ratio = s => s.gc ? s.gf / s.gc : (s.gf ? Infinity : 0);
+  const rank = s => { const i = ORDER.indexOf(s.team); return i < 0 ? 999 : i; };
+  // Points first; among teams level on points, the order of the official table, then goal difference and TF/TC.
+  return Object.values(t).sort((x,y) => y.pts - x.pts || rank(x) - rank(y) || (y.gf-y.gc) - (x.gf-x.gc) || ratio(y) - ratio(x) || x.team.localeCompare(y.team,"es"));
 }
 function nextMine(){ const today = dayStart(new Date()); return MINE.find(m => !scoreOf(m) && dayStart(m.dt) >= today) || null; }
 function countdown(m){
@@ -630,6 +633,7 @@ async function getJSON(path){
     MINE = MATCHES.filter(m => m.local === TEAM || m.visitante === TEAM).sort((a,b) => a.jornada - b.jornada);
     TEAMS = [...new Set(MATCHES.flatMap(m => [m.local, m.visitante]))].sort((a,b) => a.localeCompare(b,"es"));
     RES = (resultados && resultados.resultados) || {};
+    ORDER = (resultados && Array.isArray(resultados.orden)) ? resultados.orden : [];
     UPDATED = resultados && resultados.actualizado;
     SQUAD = (plantilla && plantilla.jugadores) || [];
     render();

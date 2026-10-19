@@ -1,4 +1,44 @@
 {
-  "actualizado": "2026-10-10",
-  "resultados": {}
+  "actualizado": "2026-10-19",
+  "resultados": {
+    "j01-1": [
+      5,
+      4
+    ],
+    "j01-2": [
+      8,
+      2
+    ],
+    "j01-3": [
+      3,
+      1
+    ],
+    "j01-4": [
+      1,
+      3
+    ],
+    "j01-5": [
+      2,
+      4
+    ],
+    "j01-6": [
+      4,
+      2
+    ]
+  },
+  "_orden": "Orden de la clasificación oficial del Ayuntamiento tras la última jornada (desempata los equipos igualados).",
+  "orden": [
+    "Astra Plosca Madrid",
+    "MELVIN",
+    "Chocolate Sexy",
+    "F X MAC FC",
+    "La Competencia",
+    "Amigos de la Peña",
+    "Soccer 7",
+    "CLUB PEN WIN",
+    "Inafuma Ibeben",
+    "Panza y Gloria",
+    "CHOPERA F.C.",
+    "PLATA O PLOMO FC"
+  ]
 }
