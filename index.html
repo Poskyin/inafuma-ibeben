@@ -21,6 +21,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Outfit:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E8%91%89%E5%B7%BB%E8%BF%91%E6%89%80&display=swap">
+<script>
+/* Halloween look: on automatically from 19 Oct to 1 Nov (viewer's local date). ?tema=halloween or ?tema=normal to force it. */
+(function(){try{
+  var d=new Date(), m=d.getMonth()+1, day=d.getDate();
+  var on=(m===10&&day>=19)||(m===11&&day<=1);
+  var q=new URLSearchParams(location.search).get('tema');
+  if(q==='halloween')on=true; if(q==='normal')on=false;
+  if(on){document.documentElement.classList.add('halloween');var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute('content','#120A10');}
+}catch(e){}})();
+</script>
 <style>
 /* Layout: pink-and-gold marble hero with the crest, a cream match card overlapping it, then a sticky four-way switch over lists, a table and the squad as shirt backs. */
 :root{
@@ -271,14 +281,62 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
   .venues{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ---------- Halloween (html.halloween, see the script in <head>) ---------- */
+:root{--calabaza:#E8650C}
+.spooky,.hw-pill{display:none}
+.crest-wrap{position:relative;flex:none;display:block}
+.hero-inner{z-index:2}
+:root.halloween{
+  --bg:#120A10; --surface:#1C1119; --fg:#F7EEE6; --muted:#B49DAA; --line:#36202E;
+  --rosa:#F0479B; --rosa-ink:#FF7DBB; --rosa-soft:#3A1528;
+  --oro:#E8BC5E; --oro-ink:#E8BC5E;
+  --azul:#6B8FE0;
+  --win:#4CC27A; --draw:#B49DAA; --loss:#F06C62;
+  --kitline:rgba(247,238,230,.4);
+  --calabaza:#FF7A1A;
+  color-scheme:dark;
+}
+.halloween body{background:radial-gradient(120% 60% at 50% 0%, #1E0D19 0%, var(--bg) 60%) var(--bg)}
+.halloween .hero{background-color:#3A0A24}
+.halloween .hero::after{background:linear-gradient(180deg,rgba(12,3,10,.58),rgba(12,3,10,.86))}
+.halloween .spooky{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.crest{height:auto}
+.halloween .crest-wrap::before{content:"";position:absolute;z-index:-1;inset:-13%;transform:translate(-12%,-12%);border-radius:50%;
+  background:radial-gradient(circle at 38% 36%,#FFF6DD 0%,#F6DC9C 55%,#E2B562 100%);
+  box-shadow:0 0 36px 10px rgba(255,206,120,.30),0 0 90px 30px rgba(255,140,40,.14)}
+.halloween .hw-pill{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;margin-bottom:6px;padding:3px 10px 3px 7px;border-radius:999px;background:var(--calabaza);color:#1A0905;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.halloween .hw-pill svg{color:#1A0905}
+.halloween .hero h1 span{color:var(--calabaza)}
+.halloween .chip{background:var(--calabaza);color:#1A0905}
+.halloween .tabs button[aria-selected="true"]{background:var(--calabaza);border-color:var(--calabaza);color:#1A0905}
+.halloween .next{box-shadow:0 10px 34px rgba(0,0,0,.45),0 0 0 1px rgba(255,122,26,.18)}
+.halloween .bat{transform-box:fill-box;transform-origin:center;animation:flap 1.6s ease-in-out infinite}
+.halloween .bat.b2{animation-duration:1.2s;animation-delay:-.4s}
+.halloween .bat.b3{animation-duration:2s;animation-delay:-.9s}
+@keyframes flap{0%,100%{scale:1 1}50%{scale:1 .55}}
+@media (prefers-reduced-motion:reduce){.halloween .bat{animation:none}}
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <svg class="spooky" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMaxYMin slice">
+    <g class="web" fill="none" stroke="rgba(255,240,225,.28)" stroke-width="1">
+      <path d="M400 0 L300 0 M400 0 L318 46 M400 0 L352 78 M400 0 L400 100"/>
+      <path d="M372 0 Q380 14 390 26 Q394 40 400 46"/>
+      <path d="M344 0 Q356 22 371 40 Q379 60 400 72"/>
+      <path d="M318 0 Q331 30 351 55 Q362 80 400 96"/>
+    </g>
+    <g class="bats" fill="#0E0309">
+      <path class="bat b1" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(250 92) scale(1.25)"/>
+      <path class="bat b2" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(318 132) scale(.8)"/>
+      <path class="bat b3" d="M20 7c-1.5-3-3.6-3.4-4.6-1.2C12.6 2.8 7.8 2.3 2 6.2c3.8.2 6.3 1.8 7.2 4.8 2-1.7 4.1-1.7 5.6.2.8-1.8 2.6-2.7 5.2-1.2 2.6-1.5 4.4-.6 5.2 1.2 1.5-1.9 3.6-1.9 5.6-.2.9-3 3.4-4.6 7.2-4.8-5.8-3.9-10.6-3.4-13.4-.4C24.6 3.6 21.5 4 20 7z" transform="translate(212 40) scale(.65)"/>
+    </g>
+  </svg>
   <div class="hero-inner">
-    <img class="crest" src="img/escudo.png" alt="Escudo de Inafuma Ibeben C.F." width="132" height="132">
+    <span class="crest-wrap"><img class="crest" src="img/escudo.png" alt="Escudo de Inafuma Ibeben C.F." width="132" height="132"></span>
     <div class="id">
+      <span class="hw-pill"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 5.2c-1.2-.9-3.7-1-5.4.6C2.6 7.7 2.3 11.9 4 14.7c1.6 2.6 4.3 2.7 6 1.6 1.7 1.1 4.4 1 6-1.6 1.7-2.8 1.4-7-.6-8.9-1.7-1.6-4.2-1.5-5.4-.6z" fill="currentColor"/><path d="M10 5.4V2.6c.9-.2 1.8.1 2.4.7" fill="none" stroke="#3B6B2A" stroke-width="1.6" stroke-linecap="round"/></svg>Especial Halloween</span>
       <p class="kanji" lang="ja">葉巻近所</p>
       <h1>Inafuma Ibeben <span>C.F.</span></h1>
       <p class="meta">Fútbol 7 · Juegos Deportivos Municipales 2026/27 · Latina · Domingo mañana · Grupo 3</p>
