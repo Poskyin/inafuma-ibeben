@@ -15,19 +15,19 @@
     "j02-6": [5, 1]
   },
   "_orden": "Orden de la clasificación oficial del Ayuntamiento. Solo se usa si 'ordenJornada' es la última jornada con resultados.",
-  "ordenJornada": 1,
+  "ordenJornada": 2,
   "orden": [
-    "Astra Plosca Madrid",
     "MELVIN",
-    "Chocolate Sexy",
-    "F X MAC FC",
     "La Competencia",
     "Amigos de la Peña",
-    "Soccer 7",
-    "CLUB PEN WIN",
-    "Inafuma Ibeben",
+    "Astra Plosca Madrid",
+    "PLATA O PLOMO FC",
+    "Chocolate Sexy",
     "Panza y Gloria",
+    "Soccer 7",
+    "F X MAC FC",
+    "Inafuma Ibeben",
     "CHOPERA F.C.",
-    "PLATA O PLOMO FC"
+    "CLUB PEN WIN"
   ]
 }
