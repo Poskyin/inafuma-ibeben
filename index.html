@@ -488,7 +488,7 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
   <footer class="foot">
     <span id="updated">Resultados actualizados: –</span>
     <span>Calendario oficial en la <a href="https://deportesweb.madrid.es/DeportesWeb/Home" target="_blank" rel="noopener">web de deportes del Ayuntamiento de Madrid</a> (Competiciones municipales → Consulta de partidos). Los cambios de hora o campo salen allí antes.</span>
-    <span>Clasificación calculada con los resultados de esta página (3 puntos por victoria y 1 por empate); a igualdad de puntos, en el orden de la clasificación oficial del Ayuntamiento.</span>
+    <span>Clasificación calculada con los resultados de esta página (3 puntos por victoria y 1 por empate); a igualdad de puntos, por cociente de goles (TF/TC), como la tabla del Ayuntamiento.</span>
   </footer>
 </main>
 
@@ -555,8 +555,8 @@ function standings(){
   });
   const ratio = s => s.gc ? s.gf / s.gc : (s.gf ? Infinity : 0);
   const rank = s => { const i = ORDER.indexOf(s.team); return i < 0 ? 999 : i; };
-  // Points first; among teams level on points, the order of the official table, then goal difference and TF/TC.
-  return Object.values(t).sort((x,y) => y.pts - x.pts || rank(x) - rank(y) || (y.gf-y.gc) - (x.gf-x.gc) || ratio(y) - ratio(x) || x.team.localeCompare(y.team,"es"));
+  // Points first; among teams level on points, the official table's order when it is up to date, otherwise TF/TC (as the official table shows), goal difference and goals scored.
+  return Object.values(t).sort((x,y) => y.pts - x.pts || rank(x) - rank(y) || ratio(y) - ratio(x) || (y.gf-y.gc) - (x.gf-x.gc) || y.gf - x.gf || x.team.localeCompare(y.team,"es"));
 }
 function nextMine(){ const today = dayStart(new Date()); return MINE.find(m => !scoreOf(m) && dayStart(m.dt) >= today) || null; }
 function countdown(m){
@@ -799,7 +799,8 @@ async function getJSON(path){
     MINE = MATCHES.filter(m => m.local === TEAM || m.visitante === TEAM).sort((a,b) => a.jornada - b.jornada);
     TEAMS = [...new Set(MATCHES.flatMap(m => [m.local, m.visitante]))].sort((a,b) => a.localeCompare(b,"es"));
     RES = (resultados && resultados.resultados) || {};
-    ORDER = (resultados && Array.isArray(resultados.orden)) ? resultados.orden : [];
+    const lastPlayed = Math.max(0, ...MATCHES.filter(m => Array.isArray(RES[m.id])).map(m => m.jornada));
+    ORDER = (resultados && Array.isArray(resultados.orden) && resultados.ordenJornada === lastPlayed) ? resultados.orden : [];
     UPDATED = resultados && resultados.actualizado;
     SQUAD = (plantilla && plantilla.jugadores) || [];
     render();
