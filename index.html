@@ -22,22 +22,38 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Outfit:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E8%91%89%E5%B7%BB%E8%BF%91%E6%89%80&display=swap">
 <script>
-/* Halloween look: on automatically from 19 Oct to 1 Nov (viewer's local date).
-   Each viewer can switch it off with the pumpkin button (remembered in this browser).
-   ?tema=halloween or ?tema=normal forces it. */
+/* Seasonal looks (viewer's local date), each with its own button at the bottom right:
+   - Halloween: on automatically from 19 to 31 Oct; the pumpkin button switches it off.
+   - Navidad: the tree button is there from 1 Nov to 6 Jan to switch it on or off;
+     it is on by default from 1 Dec to 6 Jan. The choice is remembered per season in this browser.
+   ?tema=halloween, ?tema=navidad or ?tema=normal forces one. */
 (function(){
-  var st={available:false,on:false};
+  var hw={available:false,on:false}, xm={available:false,on:false,key:''};
   try{
-    var d=new Date(), m=d.getMonth()+1, day=d.getDate();
-    var inWindow=(m===10&&day>=19)||(m===11&&day<=1);
-    var pref=null; try{pref=localStorage.getItem('ii-halloween')}catch(e){}
+    var d=new Date(), y=d.getFullYear(), m=d.getMonth()+1, day=d.getDate();
     var q=new URLSearchParams(location.search).get('tema');
-    st.available=inWindow||q==='halloween';
-    st.on=inWindow&&pref!=='off';
-    if(q==='halloween')st.on=true; if(q==='normal')st.on=false;
-    if(st.on){document.documentElement.classList.add('halloween');var t=document.querySelector('meta[name="theme-color"]');if(t)t.setAttribute('content','#120A10');}
+    function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+
+    var hwWindow=(m===10&&day>=19);
+    hw.available=hwWindow||q==='halloween';
+    hw.on=hwWindow&&get('ii-halloween')!=='off';
+
+    var xmButton=m===11||m===12||(m===1&&day<=6), xmDefault=m===12||(m===1&&day<=6);
+    xm.key='ii-navidad-'+(m===1?y-1:y);
+    var xmPref=get(xm.key);
+    xm.available=xmButton||q==='navidad';
+    xm.on=xmButton&&(xmPref==='on'||(xmDefault&&xmPref!=='off'));
+
+    if(q==='halloween'){hw.on=true;xm.on=false}
+    if(q==='navidad'){xm.on=true;hw.on=false}
+    if(q==='normal'){hw.on=false;xm.on=false}
+    if(hw.on)xm.on=false;
+
+    var t=document.querySelector('meta[name="theme-color"]');
+    if(hw.on){document.documentElement.classList.add('halloween');if(t)t.setAttribute('content','#120A10');}
+    if(xm.on){document.documentElement.classList.add('navidad');if(t)t.setAttribute('content','#0C1C15');}
   }catch(e){}
-  window.__hw=st;
+  window.__hw=hw; window.__xm=xm;
 })();
 </script>
 <style>
@@ -376,6 +392,76 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 @media (hover:hover){.hw-toggle:hover .tip{opacity:1}}
 
 @media (prefers-reduced-motion:reduce){.halloween .bat,.halloween .spider,.halloween .hero::before,.halloween .next::before{animation:none}}
+
+/* ---------- Navidad (html.navidad, see the script in <head>) ---------- */
+:root{--acebo:#C8202F}
+.xmas,.xm-pill{display:none}
+:root.navidad{
+  --bg:#0C1C15; --surface:#13271E; --fg:#F6F1E7; --muted:#A7B8AC; --line:#24402F;
+  --rosa:#F0479B; --rosa-ink:#FF86C0; --rosa-soft:#3A1A2A;
+  --oro:#E9C46A; --oro-ink:#E9C46A;
+  --azul:#7FA2E8;
+  --win:#5BD08A; --draw:#A7B8AC; --loss:#FF6F66;
+  --kitline:rgba(246,241,231,.4);
+  --acebo:#E5384A;
+  color-scheme:dark;
+}
+.navidad body{background:radial-gradient(120% 60% at 50% 0%, #17352A 0%, var(--bg) 60%) var(--bg)}
+.navidad .hero{background-color:#3A0A24}
+.navidad .hero::after{background:linear-gradient(180deg,rgba(6,22,16,.50),rgba(6,22,16,.82))}
+.navidad .xmas{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.navidad .xm-pill{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;margin-bottom:6px;padding:3px 10px 3px 7px;border-radius:999px;background:var(--acebo);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.navidad .hero h1 span{color:var(--oro)}
+.navidad .chip{background:var(--acebo);color:#fff}
+.navidad .tabs button[aria-selected="true"]{background:var(--acebo);border-color:var(--acebo);color:#fff}
+.navidad .next{box-shadow:0 10px 34px rgba(0,0,0,.45),0 0 0 1px rgba(233,196,106,.22)}
+.navidad h2{text-shadow:0 0 18px rgba(233,196,106,.35)}
+
+/* Santa hat on the crest */
+.navidad .crest-wrap::after{content:"";position:absolute;left:-9%;top:-25%;width:62%;aspect-ratio:1;pointer-events:none;transform:rotate(-22deg);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 46C10 26 22 10 40 8c8-1 14 4 16 12-6-4-11-3-14 2-4 7-3 17-2 24z' fill='%23D7263D'/%3E%3Cpath d='M22 18c6-6 12-8 18-8' fill='none' stroke='%23F05A6A' stroke-width='3' stroke-linecap='round' opacity='.6'/%3E%3Crect x='4' y='42' width='42' height='12' rx='6' fill='%23FFFDF7'/%3E%3Ccircle cx='56' cy='22' r='6.5' fill='%23FFFDF7'/%3E%3C/svg%3E") no-repeat center/contain;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,.35))}
+
+/* Snow falling over the whole page, behind the content */
+.navidad body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px,rgba(255,255,255,.75) 50%,transparent 52%),
+    radial-gradient(1.5px 1.5px at 90px 120px,rgba(255,255,255,.6) 50%,transparent 52%),
+    radial-gradient(2.5px 2.5px at 160px 60px,rgba(255,255,255,.7) 50%,transparent 52%),
+    radial-gradient(1.5px 1.5px at 60px 200px,rgba(255,255,255,.5) 50%,transparent 52%),
+    radial-gradient(2px 2px at 200px 170px,rgba(255,255,255,.6) 50%,transparent 52%);
+  background-size:240px 240px;animation:snow 14s linear infinite}
+@keyframes snow{from{background-position:0 0}to{background-position:40px 240px}}
+
+/* Snow falling in the header */
+.navidad .flakes{animation:snow-hero 9s linear infinite}
+.navidad .flakes.f2{animation-duration:13s}
+@keyframes snow-hero{from{transform:translateY(-260px)}to{transform:translateY(0)}}
+
+/* String of lights along the top of the header */
+.navidad .bulb{animation:twinkle 2.4s ease-in-out infinite}
+.navidad .bulb:nth-child(3n+1){animation-delay:-.8s}
+.navidad .bulb:nth-child(3n+2){animation-delay:-1.6s}
+@keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* Snow resting on the bottom edge of the header */
+.navidad .hero::before{content:"";position:absolute;z-index:1;left:0;right:0;bottom:-1px;height:26px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 26' preserveAspectRatio='none'%3E%3Cpath d='M0 14c12-8 22 2 34-3s20-9 32-2 22 6 34-1 22-8 34 0 20 6 32 0 22-7 34 2v16H0z' fill='%23F4F7F5'/%3E%3C/svg%3E") repeat-x bottom/400px 26px;
+  opacity:.92}
+
+/* Gift sitting on the next-match card */
+.navidad .next::before{content:"";position:absolute;right:16px;top:-42px;width:52px;height:50px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 50'%3E%3Cpath d='M26 14c-4-8-14-12-16-6s8 7 16 6zM26 14c4-8 14-12 16-6s-8 7-16 6z' fill='none' stroke='%23E9C46A' stroke-width='3'/%3E%3Crect x='4' y='14' width='44' height='10' rx='2' fill='%23B71C2C'/%3E%3Crect x='7' y='24' width='38' height='25' rx='2' fill='%23D7263D'/%3E%3Crect x='22' y='14' width='8' height='35' fill='%23E9C46A'/%3E%3C/svg%3E") no-repeat center/contain;
+  filter:drop-shadow(0 0 10px rgba(233,196,106,.35))}
+.navidad .next-top{padding-right:60px}
+
+/* Tree switch shares the pumpkin switch's spot */
+.xm-toggle{border-color:var(--line)}
+.xm-toggle .x{display:none}
+.navidad .xm-toggle{border-color:var(--acebo);box-shadow:0 0 0 4px rgba(229,56,74,.18),0 8px 22px rgba(0,0,0,.5)}
+.navidad .xm-toggle .x{display:block}
+
+@media (prefers-reduced-motion:reduce){.navidad body::before,.navidad .flakes,.navidad .bulb{animation:none}}
 </style>
 </head>
 <body>
@@ -415,6 +501,39 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
 })();
 </script>
 
+<button class="hw-toggle xm-toggle" id="xm-toggle" type="button" hidden aria-pressed="false" aria-label="Poner la ambientación de Navidad">
+  <svg viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M16 4 7 16h4.5L6 24h20l-5.5-8H25z" fill="#1F8A4C"/>
+    <rect x="14" y="24" width="4" height="5" rx="1" fill="#7A4A26"/>
+    <path d="M16 1.2l1 2.2 2.4.2-1.8 1.6.5 2.4L16 6.4l-2.1 1.2.5-2.4-1.8-1.6 2.4-.2z" fill="#FFD25A"/>
+    <circle cx="13" cy="14" r="1.3" fill="#FF4D5E"/><circle cx="19" cy="18" r="1.3" fill="#FFD25A"/><circle cx="11" cy="21" r="1.3" fill="#5FA8FF"/><circle cx="20.5" cy="22" r="1.3" fill="#FF4D5E"/>
+    <g class="x"><circle cx="25.5" cy="25.5" r="5.5" fill="#0C1C15" stroke="#E5384A" stroke-width="1.2"/><path d="M23.3 23.3l4.4 4.4M27.7 23.3l-4.4 4.4" stroke="#FFF" stroke-width="1.6" stroke-linecap="round"/></g>
+  </svg>
+  <span class="tip">Poner Navidad</span>
+</button>
+<script>
+(function(){
+  var b=document.getElementById('xm-toggle'), st=window.__xm||{}, hw=window.__hw||{};
+  if(!b||!st.available||hw.available)return;
+  b.hidden=false;
+  var root=document.documentElement, tip=b.querySelector('.tip'), meta=document.querySelector('meta[name="theme-color"]');
+  function sync(){
+    var on=root.classList.contains('navidad');
+    b.setAttribute('aria-pressed',String(on));
+    b.setAttribute('aria-label',on?'Quitar la ambientación de Navidad':'Poner la ambientación de Navidad');
+    tip.textContent=on?'Quitar Navidad':'Poner Navidad';
+    if(meta)meta.setAttribute('content',on?'#0C1C15':'#D81F80');
+  }
+  b.addEventListener('click',function(){
+    var on=!root.classList.contains('navidad');
+    root.classList.toggle('navidad',on);
+    try{localStorage.setItem(st.key,on?'on':'off')}catch(e){}
+    sync();
+  });
+  sync();
+})();
+</script>
+
 <header class="hero">
   <svg class="spooky" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMaxYMin slice">
     <g class="web" fill="none" stroke="rgba(255,240,225,.28)" stroke-width="1">
@@ -441,10 +560,40 @@ tr.me td.team{font-weight:700;color:var(--rosa-ink)}
       </g>
     </g>
   </svg>
+  <svg class="xmas" aria-hidden="true" viewBox="0 0 400 260" preserveAspectRatio="xMidYMin slice">
+    <g class="flakes f1" fill="#fff" opacity="0.85">
+      <circle cx="130" cy="39" r="2.0"/><circle cx="29" cy="139" r="1.6"/><circle cx="23" cy="132" r="1.2"/><circle cx="173" cy="18" r="1.3"/><circle cx="170" cy="215" r="1.3"/><circle cx="89" cy="163" r="2.3"/><circle cx="231" cy="103" r="2.4"/><circle cx="19" cy="223" r="1.5"/><circle cx="58" cy="31" r="1.6"/><circle cx="326" cy="47" r="1.9"/><circle cx="256" cy="97" r="1.9"/><circle cx="25" cy="15" r="1.4"/><circle cx="272" cy="111" r="1.6"/><circle cx="234" cy="118" r="1.6"/><circle cx="318" cy="182" r="1.5"/><circle cx="230" cy="137" r="2.3"/><circle cx="292" cy="75" r="2.4"/><circle cx="47" cy="109" r="2.1"/><circle cx="61" cy="127" r="1.2"/><circle cx="267" cy="199" r="1.9"/><circle cx="350" cy="82" r="2.0"/><circle cx="238" cy="151" r="1.7"/><circle cx="336" cy="246" r="1.8"/><circle cx="266" cy="16" r="2.0"/><circle cx="259" cy="258" r="2.2"/><circle cx="114" cy="100" r="2.0"/><circle cx="9" cy="120" r="1.4"/><circle cx="47" cy="15" r="2.1"/><circle cx="52" cy="64" r="1.7"/><circle cx="349" cy="21" r="1.7"/><circle cx="220" cy="230" r="2.2"/><circle cx="346" cy="72" r="1.7"/><circle cx="144" cy="230" r="2.3"/><circle cx="60" cy="46" r="1.5"/><circle cx="130" cy="299" r="2.0"/><circle cx="29" cy="399" r="1.6"/><circle cx="23" cy="392" r="1.2"/><circle cx="173" cy="278" r="1.3"/><circle cx="170" cy="475" r="1.3"/><circle cx="89" cy="423" r="2.3"/><circle cx="231" cy="363" r="2.4"/><circle cx="19" cy="483" r="1.5"/><circle cx="58" cy="291" r="1.6"/><circle cx="326" cy="307" r="1.9"/><circle cx="256" cy="357" r="1.9"/><circle cx="25" cy="275" r="1.4"/><circle cx="272" cy="371" r="1.6"/><circle cx="234" cy="378" r="1.6"/><circle cx="318" cy="442" r="1.5"/><circle cx="230" cy="397" r="2.3"/><circle cx="292" cy="335" r="2.4"/><circle cx="47" cy="369" r="2.1"/><circle cx="61" cy="387" r="1.2"/><circle cx="267" cy="459" r="1.9"/><circle cx="350" cy="342" r="2.0"/><circle cx="238" cy="411" r="1.7"/><circle cx="336" cy="506" r="1.8"/><circle cx="266" cy="276" r="2.0"/><circle cx="259" cy="518" r="2.2"/><circle cx="114" cy="360" r="2.0"/><circle cx="9" cy="380" r="1.4"/><circle cx="47" cy="275" r="2.1"/><circle cx="52" cy="324" r="1.7"/><circle cx="349" cy="281" r="1.7"/><circle cx="220" cy="490" r="2.2"/><circle cx="346" cy="332" r="1.7"/><circle cx="144" cy="490" r="2.3"/><circle cx="60" cy="306" r="1.5"/>
+    </g>
+    <g class="flakes f2" fill="#fff" opacity="0.6">
+      <circle cx="93" cy="126" r="1.1"/><circle cx="105" cy="1" r="1.0"/><circle cx="148" cy="147" r="1.3"/><circle cx="276" cy="134" r="1.1"/><circle cx="270" cy="14" r="1.2"/><circle cx="312" cy="227" r="1.2"/><circle cx="157" cy="104" r="0.8"/><circle cx="254" cy="16" r="0.7"/><circle cx="84" cy="42" r="0.9"/><circle cx="21" cy="0" r="0.8"/><circle cx="41" cy="95" r="0.7"/><circle cx="350" cy="160" r="0.8"/><circle cx="101" cy="90" r="0.9"/><circle cx="49" cy="221" r="1.3"/><circle cx="186" cy="126" r="0.8"/><circle cx="41" cy="89" r="0.9"/><circle cx="332" cy="42" r="0.7"/><circle cx="380" cy="137" r="0.8"/><circle cx="217" cy="7" r="1.0"/><circle cx="391" cy="224" r="1.1"/><circle cx="104" cy="95" r="0.8"/><circle cx="309" cy="138" r="1.2"/><circle cx="93" cy="386" r="1.1"/><circle cx="105" cy="261" r="1.0"/><circle cx="148" cy="407" r="1.3"/><circle cx="276" cy="394" r="1.1"/><circle cx="270" cy="274" r="1.2"/><circle cx="312" cy="487" r="1.2"/><circle cx="157" cy="364" r="0.8"/><circle cx="254" cy="276" r="0.7"/><circle cx="84" cy="302" r="0.9"/><circle cx="21" cy="260" r="0.8"/><circle cx="41" cy="355" r="0.7"/><circle cx="350" cy="420" r="0.8"/><circle cx="101" cy="350" r="0.9"/><circle cx="49" cy="481" r="1.3"/><circle cx="186" cy="386" r="0.8"/><circle cx="41" cy="349" r="0.9"/><circle cx="332" cy="302" r="0.7"/><circle cx="380" cy="397" r="0.8"/><circle cx="217" cy="267" r="1.0"/><circle cx="391" cy="484" r="1.1"/><circle cx="104" cy="355" r="0.8"/><circle cx="309" cy="398" r="1.2"/>
+    </g>
+    <path d="M0 10.0 L4 10.1 L8 10.6 L12 11.2 L16 12.2 L20 13.3 L24 14.6 L28 16.0 L32 17.5 L36 19.0 L40 20.5 L44 21.9 L48 23.1 L52 24.2 L56 25.0 L60 25.6 L64 25.9 L68 26.0 L72 25.7 L76 25.2 L80 24.5 L84 23.5 L88 22.3 L92 20.9 L96 19.5 L100 18.0 L104 16.5 L108 15.1 L112 13.7 L116 12.5 L120 11.5 L124 10.8 L128 10.3 L132 10.0 L136 10.1 L140 10.4 L144 11.0 L148 11.8 L152 12.9 L156 14.1 L160 15.5 L164 17.0 L168 18.5 L172 20.0 L176 21.4 L180 22.7 L184 23.8 L188 24.8 L192 25.4 L196 25.9 L200 26.0 L204 25.9 L208 25.4 L212 24.8 L216 23.8 L220 22.7 L224 21.4 L228 20.0 L232 18.5 L236 17.0 L240 15.5 L244 14.1 L248 12.9 L252 11.8 L256 11.0 L260 10.4 L264 10.1 L268 10.0 L272 10.3 L276 10.8 L280 11.5 L284 12.5 L288 13.7 L292 15.1 L296 16.5 L300 18.0 L304 19.5 L308 20.9 L312 22.3 L316 23.5 L320 24.5 L324 25.2 L328 25.7 L332 26.0 L336 25.9 L340 25.6 L344 25.0 L348 24.2 L352 23.1 L356 21.9 L360 20.5 L364 19.0 L368 17.5 L372 16.0 L376 14.6 L380 13.3 L384 12.2 L388 11.2 L392 10.6 L396 10.1 L400 10.0" fill="none" stroke="#123222" stroke-width="1.6"/>
+    <g class="lights">
+      <g class="bulb" transform="translate(12 11.2)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FF4D5E" style="filter:drop-shadow(0 0 3px #FF4D5E)"/></g>
+      <g class="bulb" transform="translate(34 18.3)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FFD25A" style="filter:drop-shadow(0 0 3px #FFD25A)"/></g>
+      <g class="bulb" transform="translate(56 25.0)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#4FD08A" style="filter:drop-shadow(0 0 3px #4FD08A)"/></g>
+      <g class="bulb" transform="translate(78 24.9)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#5FA8FF" style="filter:drop-shadow(0 0 3px #5FA8FF)"/></g>
+      <g class="bulb" transform="translate(100 18.0)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FF4D5E" style="filter:drop-shadow(0 0 3px #FF4D5E)"/></g>
+      <g class="bulb" transform="translate(122 11.1)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FFD25A" style="filter:drop-shadow(0 0 3px #FFD25A)"/></g>
+      <g class="bulb" transform="translate(144 11.0)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#4FD08A" style="filter:drop-shadow(0 0 3px #4FD08A)"/></g>
+      <g class="bulb" transform="translate(166 17.7)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#5FA8FF" style="filter:drop-shadow(0 0 3px #5FA8FF)"/></g>
+      <g class="bulb" transform="translate(188 24.8)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FF4D5E" style="filter:drop-shadow(0 0 3px #FF4D5E)"/></g>
+      <g class="bulb" transform="translate(210 25.1)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FFD25A" style="filter:drop-shadow(0 0 3px #FFD25A)"/></g>
+      <g class="bulb" transform="translate(232 18.5)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#4FD08A" style="filter:drop-shadow(0 0 3px #4FD08A)"/></g>
+      <g class="bulb" transform="translate(254 11.4)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#5FA8FF" style="filter:drop-shadow(0 0 3px #5FA8FF)"/></g>
+      <g class="bulb" transform="translate(276 10.8)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FF4D5E" style="filter:drop-shadow(0 0 3px #FF4D5E)"/></g>
+      <g class="bulb" transform="translate(298 17.2)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FFD25A" style="filter:drop-shadow(0 0 3px #FFD25A)"/></g>
+      <g class="bulb" transform="translate(320 24.5)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#4FD08A" style="filter:drop-shadow(0 0 3px #4FD08A)"/></g>
+      <g class="bulb" transform="translate(342 25.3)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#5FA8FF" style="filter:drop-shadow(0 0 3px #5FA8FF)"/></g>
+      <g class="bulb" transform="translate(364 19.0)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FF4D5E" style="filter:drop-shadow(0 0 3px #FF4D5E)"/></g>
+      <g class="bulb" transform="translate(386 11.7)"><rect x="-1.6" y="0" width="3.2" height="3" fill="#123222"/><ellipse cx="0" cy="7" rx="3.2" ry="4.6" fill="#FFD25A" style="filter:drop-shadow(0 0 3px #FFD25A)"/></g>
+    </g>
+  </svg>
   <div class="hero-inner">
     <span class="crest-wrap"><img class="crest" src="img/escudo.png" alt="Escudo de Inafuma Ibeben C.F." width="132" height="132"></span>
     <div class="id">
       <span class="hw-pill"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 5.2c-1.2-.9-3.7-1-5.4.6C2.6 7.7 2.3 11.9 4 14.7c1.6 2.6 4.3 2.7 6 1.6 1.7 1.1 4.4 1 6-1.6 1.7-2.8 1.4-7-.6-8.9-1.7-1.6-4.2-1.5-5.4-.6z" fill="currentColor"/><path d="M10 5.4V2.6c.9-.2 1.8.1 2.4.7" fill="none" stroke="#3B6B2A" stroke-width="1.6" stroke-linecap="round"/></svg>Especial Halloween</span>
+      <span class="xm-pill"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 1.5l2.4 5.3 5.8.6-4.3 3.9 1.2 5.7L10 14.1 4.9 17l1.2-5.7L1.8 7.4l5.8-.6z" fill="#FFE29A"/></svg>Especial Navidad</span>
       <p class="kanji" lang="ja">葉巻近所</p>
       <h1>Inafuma Ibeben <span>C.F.</span></h1>
       <p class="meta">Fútbol 7 · Juegos Deportivos Municipales 2026/27 · Latina · Domingo mañana · Grupo 3</p>
