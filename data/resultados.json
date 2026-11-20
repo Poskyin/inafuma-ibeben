@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-16",
+  "actualizado": "2026-11-20",
   "resultados": {
     "j01-1": [5, 4],
     "j01-2": [8, 2],
@@ -18,22 +18,28 @@
     "j03-3": [5, 2],
     "j03-4": [2, 6],
     "j03-5": [1, 6],
-    "j03-6": [1, 6]
+    "j03-6": [1, 6],
+    "j04-1": [2, 2],
+    "j04-2": [6, 3],
+    "j04-3": [14, 1],
+    "j04-4": [7, 5],
+    "j04-5": [7, 4],
+    "j04-6": [0, 1]
   },
   "_orden": "Orden de la clasificación oficial del Ayuntamiento. Solo se usa si 'ordenJornada' es la última jornada con resultados.",
-  "ordenJornada": 3,
+  "ordenJornada": 4,
   "orden": [
     "MELVIN",
-    "La Competencia",
     "Amigos de la Peña",
-    "Astra Plosca Madrid",
     "Panza y Gloria",
+    "La Competencia",
     "PLATA O PLOMO FC",
-    "Soccer 7",
     "Chocolate Sexy",
+    "Astra Plosca Madrid",
+    "Soccer 7",
     "F X MAC FC",
+    "CLUB PEN WIN",
     "CHOPERA F.C.",
-    "Inafuma Ibeben",
-    "CLUB PEN WIN"
+    "Inafuma Ibeben"
   ]
 }
